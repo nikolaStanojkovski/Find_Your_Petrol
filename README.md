@@ -1,4 +1,4 @@
-# Find_Your_Petrol
+# Find Your Petrol
 -----------------------------------------------------------------------------------
 ## Software design and architecture project by:
 ## <i>Nikola Stanojkovski, Tashko Pavlov, Emil Petrovski</i>
