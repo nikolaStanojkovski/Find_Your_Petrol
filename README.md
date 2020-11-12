@@ -31,7 +31,7 @@ The filtering was done through Bash '.sh' scripts which was using python interpr
 
 Our group consists of 3 members:
 
-<i>Tashko Pavlov - 181114 <br>
+<i>Tashko Pavlov - 181104 <br>
 
 Emil Petrovski - 181201 <br>
 
@@ -74,7 +74,7 @@ We would be grateful if you let us know that our time was spent on a good cause.
 Нашата група се состои од 3 члена: <br>
 <i>
 
-Ташко Павлов - 181114 <br>
+Ташко Павлов - 181104 <br>
 
 Емил Петровски - 181201 <br>
 
