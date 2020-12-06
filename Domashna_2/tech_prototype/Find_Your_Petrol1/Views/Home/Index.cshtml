@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row" style="margin-top:140px;">
+    <div class="col-md-6">
+        
+        <div class="row" style="margin-bottom:40px;">
+            <h3>Изберете филтер за филтрирање на бензински пумпи.</h3>
+            <h4>Внесете ја вашата локација</h4>
+            <div class="row">
+                <div class="col-md-3" style="margin-right: 50px;">
+                    <input type="text" name="longitude" value="" placeholder="Географска широчина" class="form-control" style="width:180px;" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="latitude" value="" placeholder="Географска височина" class="form-control" style="width:180px;" />
+                </div>
+            </div>
+            <select class="form-control" style="margin-top:20px;margin-left:20px;">
+                <option value="shortestPath">Најблиску</option>
+                <option value="cheapestPath">Најефтина</option>
+                <option value="bestQualityPath">Најквалитетна</option>
+            </select>
+        </div>
+        <div class="row">
+            <img src="~/Pictures/map.png" alt="Локација на вашата бензинска пумпа" width="500" height="500" />
+        </div>
+        <div class="row">
+            <h4>Спореди оддалеченост на две бензински:</h4>
+            <div class="row">
+                <div class="col-md-2" style="margin-right: 50px;">
+                    <input type="text" name="benzinska1" value="" placeholder="Бензинска бр.1" class="form-control" style="width:130px;" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="benzinska2" value="" placeholder="Бензинска бр.2" class="form-control" style="width:130px;" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Оддалеченост:</h3>
+                </div>
+                <div class="col-md-1" style="margin-top:17px;">
+                    <h5 id="oddalecenost">0km</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <h3>Име на бензинска: </h3> <p id="ime_benzinska">Макпетрол</p>
+        </div>
+        <div class="row">
+            <h3>Локација: </h3> <p id="lokacija_benzinska">41.123 32.233</p>
+        </div>
+        <div class="row">
+            <h3>Типови на гориво: </h3> <p id="tip_gorivo">Супер98, Супер100, Дизел</p>
+        </div>
+        <div class="row">
+            <h3>Проценета оддалеченост: </h3> <p id="oddalecenost_od_benzinska">1km</p>
+        </div>
+        <div class="row">
+            <h3>Работно време: </h3> <p id="rabotno_vreme_benzinska">24,7</p>
+        </div>
+        <div class="row">
+            <h3>Контакт: </h3> <p id="kontakt_benzinska">071 332 445</p>
+        </div>
+        <div class="row">
+            <div >
+                <h3>Оцена и коментари: </h3>
+            </div>
+           
+            <div >
+                <img src="~/Pictures/1_PvoG2ZWSd5Z-a3k2jdM55A.png" alt="Оцена" width="184" height="53"/> <br /><br />
+                <input type="text" name="vashiot_komentar" value="" placeholder="Внесете ваш коментар"/>
+            </div>
+
+        </div>
+    </div>
+</div>
