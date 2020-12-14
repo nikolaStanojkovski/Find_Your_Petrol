@@ -10,7 +10,6 @@ namespace Find_Your_Petrol1.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Find_Your_Petrol1.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Find_Your_Petrol1.Models.ApplicationDbContext context)

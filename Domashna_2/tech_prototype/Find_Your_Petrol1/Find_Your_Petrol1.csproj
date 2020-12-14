@@ -174,17 +174,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012061102344_InitialCreate.cs" />
-    <Compile Include="Migrations\202012061102344_InitialCreate.Designer.cs">
-      <DependentUpon>202012061102344_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012061221230_initial.cs" />
-    <Compile Include="Migrations\202012061221230_initial.Designer.cs">
-      <DependentUpon>202012061221230_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202012140023541_initial.cs" />
+    <Compile Include="Migrations\202012140023541_initial.Designer.cs">
+      <DependentUpon>202012140023541_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddRoleToUsers.cs" />
+    <Compile Include="Models\Fuel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PetrolStation.cs" />
@@ -274,11 +271,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012061102344_InitialCreate.resx">
-      <DependentUpon>202012061102344_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012061221230_initial.resx">
-      <DependentUpon>202012061221230_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012140023541_initial.resx">
+      <DependentUpon>202012140023541_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
