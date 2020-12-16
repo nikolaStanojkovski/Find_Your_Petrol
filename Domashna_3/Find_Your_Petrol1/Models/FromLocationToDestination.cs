@@ -18,7 +18,7 @@ namespace Find_Your_Petrol1.Models
 
         }
 
-        public FromLocationToDestination(double userLat, double usersLon, double stationsLat, double stationsLon, string transit_mode)
+        public FromLocationToDestination(double userLat, double usersLon, double stationsLat, double stationsLon, String transit_mode)
         {
             this.usersLongitude = usersLon;
             this.usersLatitude = userLat;
