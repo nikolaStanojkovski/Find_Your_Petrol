@@ -48,6 +48,7 @@
                     class="form-control"
                     id="stations"
                     onchange="newStationSelected()">
+                <option value="" value-lon="" id="closestPetrol">Најблиска бензинска пумпа</option>
                 @foreach (var station in ViewBag.PetrolStationNames)
                 {
 
@@ -72,6 +73,8 @@
     </div>
 
     <script>
+
+
         var x = document.getElementById("demo");
         if (document.readyState) {
             getLocation();
@@ -100,7 +103,42 @@
             document.getElementById("userLat").value = "" + lat + "";
             document.getElementById("userLon").value = "" + long + "";
 
+            findClosestPetrol(lat, long);
             newStationSelected();
+        }
+
+
+        function findClosestPetrol(lat, lon) {
+            var petrolStations = @Html.Raw(Json.Encode(ViewBag.PetrolStationNames));
+            var closestLat = 0;
+            var closestLon = 0;
+            var minDistance = 0;
+
+            for (var i = 0; i < petrolStations.length; i++) {
+                var distance = calculateDistance(lat, lon, petrolStations[i].GeografskaShirochina, petrolStations[i].Dolzhina);
+                if (i == 0) {
+                    minDistance = distance;
+                    closestLat = petrolStations[i].GeografskaShirochina;
+                    closestLon = petrolStations[i].Dolzhina;
+                    continue;
+                }
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestLat = petrolStations[i].GeografskaShirochina;
+                    closestLon = petrolStations[i].Dolzhina;
+                }
+            }
+
+            var findOption = document.getElementById("closestPetrol");
+            findOption.value = closestLat;
+            findOption.setAttribute("value-lon", closestLon);
+
+        }
+
+        function calculateDistance(userLat, userLon, petrolLat, petrolLon) {
+            // Ke presmetam evklidovo rastojanie pomegju segasnata pozicija na korisnikot i dadenata benzinska stanica!
+            return Math.sqrt(Math.pow((userLat - petrolLat), 2) + Math.pow((userLon - petrolLon), 2));
+
         }
 
         function showError(error) {
