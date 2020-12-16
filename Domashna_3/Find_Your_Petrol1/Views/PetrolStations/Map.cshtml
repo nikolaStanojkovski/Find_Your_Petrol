@@ -27,17 +27,7 @@
 
                 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 
-                    @*var trafficMod = google.maps.TrafficModel.BEST_GUESS;
-
-                    if ("bestguess".localeCompare(""+@Model.traffic_model+"") == 0) {
-                        trafficMod = google.maps.TrafficModel.BEST_GUESS;
-                    } else if ("pessimistic".localeCompare(""+@Model.traffic_model+"") == 0) {
-                        trafficMod = google.maps.TrafficModel.PESSIMISTIC;
-                    } else {
-                        trafficMod = google.maps.TrafficModel.OPTIMISTIC;
-                    }*@
-
-                    @*console.log(@Model.usersLatitude);*@
+                    console.log();
 
                     directionsService.route(
                         {
@@ -49,7 +39,7 @@
                             },
                             drivingOptions: {
                                 departureTime: new Date(Date.now()),
-                                @*trafficModel: '' +@Model.traffic_model+''*@
+                                trafficModel: '@Model.traffic_model'
                             },
                             travelMode: google.maps.TravelMode.DRIVING,
                         },
