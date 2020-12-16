@@ -36,6 +36,13 @@ namespace Find_Your_Petrol1.Controllers
             return View(petrolStation);
         }
 
+        //GET: PetrolStations/Map
+
+        public ActionResult Map(FromLocationToDestination model)
+        {
+            return View(model);
+        }
+
         // GET: PetrolStations/Create
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()

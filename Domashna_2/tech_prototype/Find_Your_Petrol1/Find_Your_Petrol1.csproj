@@ -181,6 +181,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddRoleToUsers.cs" />
+    <Compile Include="Models\FromLocationToDestination.cs" />
     <Compile Include="Models\Fuel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Pictures\searchIcon.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Petrol_Stations Dataset\petrol_stations.csv" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -253,6 +255,7 @@
     <Content Include="Views\PetrolStations\Details.cshtml" />
     <Content Include="Views\PetrolStations\Edit.cshtml" />
     <Content Include="Views\PetrolStations\Index.cshtml" />
+    <Content Include="Views\PetrolStations\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
