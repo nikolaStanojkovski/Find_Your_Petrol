@@ -1,81 +1,120 @@
-﻿@{
+﻿@model Find_Your_Petrol1.Models.FromLocationToDestination
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 
-<div class="row" style="margin-top:140px;">
-    <div class="col-md-6">
-        
-        <div class="row" style="margin-bottom:40px;">
-            <h3>Изберете филтер за филтрирање на бензински пумпи.</h3>
-            <h4>Внесете ја вашата локација</h4>
-            <div class="row">
-                <div class="col-md-3" style="margin-right: 50px;">
-                    <input type="text" name="longitude" value="" placeholder="Географска широчина" class="form-control" style="width:180px;" />
-                </div>
-                <div class="col-md-3">
-                    <input type="text" name="latitude" value="" placeholder="Географска височина" class="form-control" style="width:180px;" />
-                </div>
-            </div>
-            <select class="form-control" style="margin-top:20px;margin-left:20px;">
-                <option value="shortestPath">Најблиску</option>
-                <option value="cheapestPath">Најефтина</option>
-                <option value="bestQualityPath">Најквалитетна</option>
-            </select>
-        </div>
-        <div class="row">
-            <img src="~/Pictures/map.png" alt="Локација на вашата бензинска пумпа" width="500" height="500" />
-        </div>
-        <div class="row">
-            <h4>Спореди оддалеченост на две бензински:</h4>
-            <div class="row">
-                <div class="col-md-2" style="margin-right: 50px;">
-                    <input type="text" name="benzinska1" value="" placeholder="Бензинска бр.1" class="form-control" style="width:130px;" />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="benzinska2" value="" placeholder="Бензинска бр.2" class="form-control" style="width:130px;" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h3>Оддалеченост:</h3>
-                </div>
-                <div class="col-md-1" style="margin-top:17px;">
-                    <h5 id="oddalecenost">0km</h5>
-                </div>
-            </div>
-        </div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    </div>
-    <div class="col-md-5">
-        <div class="row">
-            <h3>Име на бензинска: </h3> <p id="ime_benzinska">Макпетрол</p>
-        </div>
-        <div class="row">
-            <h3>Локација: </h3> <p id="lokacija_benzinska">41.123 32.233</p>
-        </div>
-        <div class="row">
-            <h3>Типови на гориво: </h3> <p id="tip_gorivo">Супер98, Супер100, Дизел</p>
-        </div>
-        <div class="row">
-            <h3>Проценета оддалеченост: </h3> <p id="oddalecenost_od_benzinska">1km</p>
-        </div>
-        <div class="row">
-            <h3>Работно време: </h3> <p id="rabotno_vreme_benzinska">24,7</p>
-        </div>
-        <div class="row">
-            <h3>Контакт: </h3> <p id="kontakt_benzinska">071 332 445</p>
-        </div>
-        <div class="row">
-            <div >
-                <h3>Оцена и коментари: </h3>
-            </div>
-           
-            <div >
-                <img src="~/Pictures/1_PvoG2ZWSd5Z-a3k2jdM55A.png" alt="Оцена" width="184" height="53"/> <br /><br />
-                <input type="text" name="vashiot_komentar" value="" placeholder="Внесете ваш коментар"/>
-            </div>
+<div class="row">
 
-        </div>
+    <div class="jumbotron">
+        <h1 style="margin:auto;">Барајте Бензинска Станица!</h1>
     </div>
+
 </div>
+
+@using (Html.BeginForm("FromLocationToDestination", "Home", FormMethod.Post))
+{
+
+
+    <div class="row" style="margin-top:140px;">
+
+        <div class="col-md-5">
+            <h4>Вашата сегашна локација е: </h4> <p id="demo" style="visibility: hidden;color:red;">Геолокацијата не е поддржана од вашиот пребарувач!</p> <h4 id="latitude" style="visibility:hidden;"></h4><h4 id="longitude" style="visibility:hidden;"></h4>
+            <div id="googleMap"></div>
+            @Html.HiddenFor(m => m.usersLatitude, new { id = "userLat" })
+            @Html.HiddenFor(m => m.usersLongitude, new { id = "userLon" })
+        </div>
+        <div class="col-md-3">
+
+            <h4>Изберете на кој начин ќе ја барате вашата бензинска: </h4>
+            @Html.DropDownListFor(m => m.traffic_model, new List<SelectListItem> {
+                new SelectListItem{Text = "Најбрз начин", Value = "bestguess", Selected=true},
+                new SelectListItem{Text = "Песимистички начин", Value = "pessimistic"},
+                new SelectListItem{Text = "Оптимистички начин", Value = "optimistic"}
+             }, "Изберете едно", new { @class = "form-control" })
+
+        </div>
+
+        <div class="col-md-3">
+
+            <h4>Изберете бензинска пумпа:</h4>
+
+            <select name="@Html.NameFor(model => model.stationsLatitude)"
+                    class="form-control"
+                    id="stations"
+                    onchange="newStationSelected()">
+                @foreach (var station in ViewBag.PetrolStationNames)
+                {
+
+                    <option value="@station.GeografskaShirochina"
+                            value-lon="@station.Dolzhina">
+                        @station.ImeNaBenzinska
+                    </option>
+
+                }
+            </select>
+            @Html.HiddenFor(m => m.stationsLongitude, new { id = "stationLon" })
+
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Пребарај" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var x = document.getElementById("demo");
+        if (document.readyState) {
+            getLocation();
+        }
+        function getLocation() {
+            if (navigator.geolocation) {
+
+                latitude.innerHTML = navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.style.visibility = "visible";
+                console.log("Your browser does not allow geolocation!");
+            }
+        }
+        function showPosition(position) {
+            var latitude = document.getElementById("latitude");
+            var longitude = document.getElementById("longitude");
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+            latitude.setAttribute("userLatitude", position.coords.latitude);
+            longitude.setAttribute("userLongitude", position.coords.longitude);
+
+            var map = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyDV8iZjs4VSoni6WADbP0xd43UaBJ4RBJ0&center=" + position.coords.latitude + "," + position.coords.longitude +
+                "&zoom=14&size=400x300&sensor=false&markers=color:red%7Clabel:S%7C" + position.coords.latitude + "," + position.coords.longitude;
+            document.getElementById("googleMap").innerHTML = "<img src='" + map + "'/>";
+
+            document.getElementById("userLat").value = "" + lat + "";
+            document.getElementById("userLon").value = "" + long + "";
+
+            newStationSelected();
+        }
+
+        function showError(error) {
+            console.log(error);
+        }
+
+        function newStationSelected() {
+
+            var e = document.getElementById("stations");
+            var option = e.options[e.selectedIndex];
+            document.getElementById("stationLon").value = option.getAttribute("value-lon");
+
+        }
+
+    </script>
+
+}

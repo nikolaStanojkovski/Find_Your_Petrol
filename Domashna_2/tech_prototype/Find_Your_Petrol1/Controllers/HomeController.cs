@@ -15,13 +15,21 @@ namespace Find_Your_Petrol1.Controllers
 
         public ActionResult Index()
         {
-            insertToDatabase();
-            return View();
+            FromLocationToDestination model = new FromLocationToDestination();
+            ViewBag.PetrolStationNames = db.PetrolStations.ToArray();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult FromLocationToDestination(FromLocationToDestination model)
+        {
+            return RedirectToAction("Map", "PetrolStations", model);
+
         }
 
         private void insertToDatabase()
         {
-            using (StreamReader file = new StreamReader("petrol_stations.csv"))
+            using (StreamReader file = new StreamReader("~/Petrol_Stations Dataset/petrol_stations.csv"))
             {
                 int counter = 0;
                 string ln;
