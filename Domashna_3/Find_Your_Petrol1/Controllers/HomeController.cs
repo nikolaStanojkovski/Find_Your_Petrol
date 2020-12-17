@@ -29,15 +29,41 @@ namespace Find_Your_Petrol1.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            ViewBag.Message = "Опис на апликацијата";
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.NotLogged = false;
+            ViewBag.Message = "Контакт страна";
+            Session["DoneFeedback"] = "no";
+            ViewBag.Feedbacks = db.UserFeedbacks.ToList();
+            if (this.User.Identity.Name != null && !this.User.Identity.Name.Equals(""))
+            {
+                UserFeedback model = new UserFeedback();
+                model.CurrentUserUsername = this.User.Identity.Name;
 
+                return View(model);
+            } else
+            {
+                ViewBag.NotLogged = true;
+                ViewBag.Message = "Не можете да оставите повратна информација доколку не сте логирани !!!";
+
+                return View();
+            }
+            
+        }
+
+        [HttpPost]
+        public ActionResult Contact(UserFeedback model)
+        {
+            ViewBag.Message = "Your contact page";
+            Session["DoneFeedback"] = "yes";
+            db.UserFeedbacks.Add(model);
+            db.SaveChanges();
+
+            ViewBag.Feedbacks = db.UserFeedbacks.ToList();
             return View();
         }
     }

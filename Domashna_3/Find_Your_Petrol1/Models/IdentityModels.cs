@@ -32,5 +32,6 @@ namespace Find_Your_Petrol1.Models
 
         public System.Data.Entity.DbSet<Find_Your_Petrol1.Models.PetrolStation> PetrolStations { get; set; }
         public DbSet<Fuel> Fuels { get; set; }
+        public DbSet<UserFeedback> UserFeedbacks { get; set; }
     }
 }
