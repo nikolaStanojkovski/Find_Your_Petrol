@@ -36,8 +36,38 @@ namespace Find_Your_Petrol1.Controllers
             return View(petrolStation);
         }
 
-        //GET: PetrolStations/Map
+        private double CalculateEuqlide(DistanceCalculator model)
+        {
+            PetrolStation from = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == model.FromId);
+            PetrolStation to = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == model.ToId);
+            double latDistance = Math.Abs(from.Dolzhina - to.Dolzhina);
+            double lngDistance = Math.Abs(from.Dolzhina - to.Dolzhina);
 
+            double a = Math.Sin(latDistance / 2) * Math.Sin(latDistance / 2)
+              + Math.Cos(from.GeografskaShirochina) * Math.Cos(to.GeografskaShirochina)
+              * Math.Sin(lngDistance / 2) * Math.Sin(lngDistance / 2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return (Math.Round(6371 * c));
+        }
+
+        public ActionResult CalculateDistance()
+        {
+            DistanceCalculator model = new DistanceCalculator();
+            model.petrols = db.PetrolStations.ToList();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CalculateDistance(DistanceCalculator model)
+        {
+            model.kilometres = CalculateEuqlide(model);
+            model.petrols = db.PetrolStations.ToList();
+            return View(model);
+        }
+
+        //GET: PetrolStations/Map
         public ActionResult Map(FromLocationToDestination model)
         {
             return View(model);

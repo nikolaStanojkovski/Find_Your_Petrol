@@ -25,6 +25,7 @@
                     <li>@Html.ActionLink("За нас", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Бензински пумпи", "Index", "PetrolStations")</li>
+                    <li>@Html.ActionLink("Пресметувач на дистанца", "CalculateDistance", "PetrolStations")</li>
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Додај корисник во улога", "AddUserToRole", "Account")</li>
