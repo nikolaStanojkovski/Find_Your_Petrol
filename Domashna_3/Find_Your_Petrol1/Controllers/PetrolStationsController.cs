@@ -70,6 +70,14 @@ namespace Find_Your_Petrol1.Controllers
         //GET: PetrolStations/Map
         public ActionResult Map(FromLocationToDestination model)
         {
+
+            var petrolStation = db.PetrolStations.Where(r => r.GeografskaShirochina.Equals(model.stationsLatitude) && r.Dolzhina.Equals(model.stationsLongitude));
+            ViewBag.station = petrolStation.FirstOrDefault();
+
+            /* var stationId = petrolStation.FirstOrDefault().PetrolStationId;
+             var getFuelId = */
+            //Da presmetam oddalecenost
+
             return View(model);
         }
 
