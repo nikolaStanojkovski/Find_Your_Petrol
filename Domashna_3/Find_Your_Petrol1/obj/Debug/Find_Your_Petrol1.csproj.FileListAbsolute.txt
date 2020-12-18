@@ -661,3 +661,5 @@ C:\Users\pavlo\Source\Repos\Find_Your_Petrol3\Domashna_3\Find_Your_Petrol1\obj\D
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol3\Domashna_3\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.CopyComplete
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol3\Domashna_3\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.dll
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol3\Domashna_3\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.pdb
+C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.second.resources
+C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.PetrolStationFuelsModelAdded.resources

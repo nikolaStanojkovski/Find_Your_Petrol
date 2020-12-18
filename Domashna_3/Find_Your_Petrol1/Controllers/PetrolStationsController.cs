@@ -71,12 +71,27 @@ namespace Find_Your_Petrol1.Controllers
         public ActionResult Map(FromLocationToDestination model)
         {
 
-            var petrolStation = db.PetrolStations.Where(r => r.GeografskaShirochina.Equals(model.stationsLatitude) && r.Dolzhina.Equals(model.stationsLongitude));
-            ViewBag.station = petrolStation.FirstOrDefault();
+            var petrolStation = db.PetrolStations.Where(r => r.GeografskaShirochina.Equals(model.stationsLatitude) && r.Dolzhina.Equals(model.stationsLongitude)).FirstOrDefault();
+            ViewBag.station = petrolStation;
 
-            /* var stationId = petrolStation.FirstOrDefault().PetrolStationId;
-             var getFuelId = */
-            //Da presmetam oddalecenost
+            var stationId = petrolStation.PetrolStationId;
+            var getAllFuelsWithStationId = db.PetrolStationFuels.Where(r => r.PetrolStation_PetrolStationId.Equals(stationId)).Select(r => r.Fuel_FuelId).ToList();
+
+            List<String> fuelList = new List<string>();
+
+            if (getAllFuelsWithStationId.Count != 0)
+            {
+                foreach (var fuel_id in getAllFuelsWithStationId)
+                {
+                    fuelList.Add(db.Fuels.Where(r => r.FuelId.Equals(fuel_id)).FirstOrDefault().Name);
+                }
+            }
+            else
+            {
+                fuelList.Add("Непознато");
+            }
+
+            ViewBag.fuels = fuelList;
 
             return View(model);
         }
