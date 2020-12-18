@@ -36,6 +36,17 @@ namespace Find_Your_Petrol1.Controllers
             return View(petrolStation);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult PostRating(int rating, int mid)
+        {
+            PetrolStation petrol = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == mid);
+            petrol.Ocena = rating;
+            db.Entry(petrol).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return Json("You rated this " + rating.ToString() + " star(s)");
+        }
+
         private double CalculateEuqlide(DistanceCalculator model)
         {
             PetrolStation from = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == model.FromId);

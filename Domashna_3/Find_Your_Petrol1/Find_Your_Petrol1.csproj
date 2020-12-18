@@ -362,6 +362,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Pictures\1_PvoG2ZWSd5Z-a3k2jdM55A.png" />
+    <Content Include="Pictures\EmptyStar.png" />
+    <Content Include="Pictures\FilledStar.png" />
     <Content Include="Pictures\map.png" />
     <Content Include="Pictures\searchIcon.png" />
     <Content Include="Scripts\bootbox.js" />
