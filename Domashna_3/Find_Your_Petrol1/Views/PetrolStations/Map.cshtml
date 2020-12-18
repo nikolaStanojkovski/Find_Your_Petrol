@@ -97,7 +97,14 @@
             <h4 id="krajna_adresa"></h4>
         </div>
         <div class="row">
-            <h3>Типови на гориво: </h3> <p id="tip_gorivo">Супер98, Супер100, Дизел</p>
+            <h3>Типови на гориво: </h3>
+            @foreach (var item in ViewBag.fuels)
+            {
+                <p>
+                    @item
+                </p>
+            }
+
         </div>
         <div class="row">
             <h3>Проценета оддалеченост: </h3> <p id="oddalecenost_od_benzinska"></p>
