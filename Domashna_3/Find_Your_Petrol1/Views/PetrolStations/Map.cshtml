@@ -9,9 +9,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="row center-block" style="margin-top:140px;">
-    <div class="col-md-6">
+    <div class="col-md-7" style="margin-right:28px;">
         <div class="row">
-            <div id="googleMap" style="height:400px;width:100%;"></div>
+            <h3>Вашата почетна адреса: </h3> <h3 id="pocetna_adresa"></h3>
+        </div>
+        <div class="row">
+            <div id="googleMap" style="height:650px;width:100%;"></div>
             <script>
                 function initMap() {
                     const directionsService = new google.maps.DirectionsService();
@@ -46,6 +49,23 @@
                         (response, status) => {
                             if (status === "OK") {
                                 directionsRenderer.setDirections(response);
+
+                                const route = response.routes[0];
+                                const stepsPanel = document.getElementById("potrebni_chekori");
+
+                                document.getElementById("oddalecenost_od_benzinska").innerHTML = route.legs[0].distance.text;
+                                document.getElementById("potrebno_vreme").innerHTML = route.legs[0].duration_in_traffic.text;
+                                document.getElementById("krajna_adresa").innerHTML = route.legs[0].end_address;
+                                document.getElementById("pocetna_adresa").innerHTML = route.legs[0].start_address;
+                                console.log(route.legs[0]);
+
+                                for (var i = 0; i < route.legs[0].steps.length; i++) {
+                                    var dist = route.legs[0].steps[i].distance.text;
+                                    var instructions = route.legs[0].steps[i].instructions;
+
+                                    stepsPanel.innerHTML += "Во наредните " + dist + ": " + instructions + "<br/>";
+                                }
+
                             } else {
                                 window.alert("Directions request failed due to " + status);
                             }
@@ -56,6 +76,48 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8iZjs4VSoni6WADbP0xd43UaBJ4RBJ0&callback=initMap"></script>
 
         </div>
-
     </div>
+
+    <div class="col-md-4">
+
+        <div class="row">
+            <h3>Потребни чекори:</h3>
+            <div id="potrebni_chekori">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <h3>Име на бензинска: </h3> <p id="ime_benzinska">@ViewBag.station.ImeNaBenzinska</p>
+        </div>
+
+        <div class="row">
+            <h3>Локација: </h3> <p id="lokacija_benzinska">(@ViewBag.station.GeografskaShirochina, @ViewBag.station.Dolzhina)</p>
+            <h4 id="krajna_adresa"></h4>
+        </div>
+        <div class="row">
+            <h3>Типови на гориво: </h3> <p id="tip_gorivo">Супер98, Супер100, Дизел</p>
+        </div>
+        <div class="row">
+            <h3>Проценета оддалеченост: </h3> <p id="oddalecenost_od_benzinska"></p>
+        </div>
+        <div class="row">
+            <h3>Проценето потребно време: </h3> <p id="potrebno_vreme"></p>
+        </div>
+        <div class="row">
+            <h3>Работно време: </h3> <p id="rabotno_vreme_benzinska">@ViewBag.station.RabotnoVreme</p>
+        </div>
+        <div class="row">
+            <div>
+                <h3>Оцена и коментари: </h3>
+            </div>
+
+            <div>
+                <img src="~/Pictures/1_PvoG2ZWSd5Z-a3k2jdM55A.png" alt="Оцена" width="184" height="53" /> <br /><br />
+                <input type="text" name="vashiot_komentar" value="" placeholder="Внесете ваш коментар" />
+            </div>
+        </div>
+    </div>
+
 </div>
