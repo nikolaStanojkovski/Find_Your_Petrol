@@ -10,17 +10,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="row">
-        
+
     <div class="jumbotron">
         <h2 style="text-align:center; margin:auto;">Барајте Бензинска Станица!</h2>
     </div>
-    
+
 </div>
 
 @using (Html.BeginForm("FromLocationToDestination", "Home", FormMethod.Post))
 {
 
-    
+
     <div class="row form-group" style="margin-top:50px;">
         <div class="form-group">
             <div class="col-md-5">
@@ -38,8 +38,11 @@
                     new SelectListItem{Text = "Оптимистички начин", Value = "optimistic"}
                  }, "Изберете едно", new { @class = "form-control" })
 
+
             </div>
         </div>
+
+
         <div class="form-group">
             <div class="col-md-3">
 
@@ -64,13 +67,11 @@
 
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-                <input style="margin-top:10px;" type="submit" value="Пребарај" class="btn btn-primary" />
-            </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <input style="width: 100%;margin-left: 390px;" type="submit" value="Пребарај" class="btn btn-primary" />
         </div>
-
     </div>
 
     <script>
