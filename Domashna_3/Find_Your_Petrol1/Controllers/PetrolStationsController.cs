@@ -36,6 +36,17 @@ namespace Find_Your_Petrol1.Controllers
             return View(petrolStation);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult PostRating(int rating, int mid)
+        {
+            PetrolStation station = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == mid);
+            station.Ocena = rating;
+            db.Entry(station).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return Json("You rated this " + rating.ToString() + " star(s)");
+        }
+
         private double CalculateEuqlide(DistanceCalculator model)
         {
             PetrolStation from = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == model.FromId);
@@ -90,6 +101,11 @@ namespace Find_Your_Petrol1.Controllers
             {
                 fuelList.Add("Непознато");
             }
+
+            if(this.User.Identity != null && !this.User.Identity.Name.Equals(""))
+                ViewBag.isLogged = true;
+            else
+                ViewBag.isLogged = false;
 
             ViewBag.fuels = fuelList;
 
