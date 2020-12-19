@@ -4,9 +4,11 @@
     ViewBag.Title = "Map";
 }
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
 
 <div class="row center-block" style="margin-top:140px;">
     <div class="col-md-7" style="margin-right:28px;">
@@ -29,8 +31,6 @@
                 }
 
                 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-
-                    console.log();
 
                     directionsService.route(
                         {
@@ -55,9 +55,8 @@
 
                                 document.getElementById("oddalecenost_od_benzinska").innerHTML = route.legs[0].distance.text;
                                 document.getElementById("potrebno_vreme").innerHTML = route.legs[0].duration_in_traffic.text;
-                                // document.getElementById("krajna_adresa").innerHTML = route.legs[0].end_address;
-                                // document.getElementById("pocetna_adresa").innerHTML = route.legs[0].start_address;
-                                console.log(route.legs[0]);
+                                document.getElementById("lokacija_benzinska").innerHTML += " "+route.legs[0].end_address;
+                                document.getElementById("pocetna_adresa").innerHTML = route.legs[0].start_address;
 
                                 for (var i = 0; i < route.legs[0].steps.length; i++) {
                                     var dist = route.legs[0].steps[i].distance.text;
