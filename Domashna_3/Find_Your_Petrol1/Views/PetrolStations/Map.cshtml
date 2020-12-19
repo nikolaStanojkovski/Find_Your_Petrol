@@ -154,7 +154,7 @@
 
                 $(this).css('color', 'red');
 
-                var url = "/Movies/PostRating?rating=" + parseInt($(this).attr("id")) + "&mid=" + parseInt($(this).attr("mid"));
+                var url = "/PetrolStations/PostRating?rating=" + parseInt($(this).attr("id")) + "&mid=" + parseInt($(this).attr("mid"));
                 $.post(url, null, function (data) {
                     $(e.currentTarget).closest('tr').find('div.result').text(data).css('color', 'red')
                 });
