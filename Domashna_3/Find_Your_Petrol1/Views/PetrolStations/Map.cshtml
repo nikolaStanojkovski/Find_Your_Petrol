@@ -57,5 +57,119 @@
 
         </div>
 
+        <div>
+            <div class="col-md-4">
+
+                <div class="row">
+                    <h3>Потребни чекори:</h3>
+                    <div id="potrebni_chekori">
+                    </div>
+                </div>
+
+                <table class="table" id="petrolsTable">
+                    <thead>
+                        <tr>
+                            <th>Име на бензинска:</th>
+                            <th>Локација:</th>
+                            <th>Типови на гориво:</th>
+                            <th>Проценета оддалеченост:</th>
+                            <th>Проценето потребно време:</th>
+                            <th>Работно време:</th>
+                            <th>Оценка:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><p id="ime_benzinska">@ViewBag.station.ImeNaBenzinska</p></td>
+                            <td>
+                                <p id="lokacija_benzinska">(@ViewBag.station.GeografskaShirochina, @ViewBag.station.Dolzhina)</p>
+                                <h4 id="krajna_adresa"></h4>
+                            </td>
+                            <td>
+                                @foreach (var item in ViewBag.fuels)
+                                {
+                                    <p>
+                                        @item
+                                    </p>
+                                }
+                            </td>
+                            <td>
+                                <p id="oddalecenost_od_benzinska"></p>
+                            </td>
+                            <td>
+                                <p id="potrebno_vreme"></p>
+                            </td>
+                            <td>
+                                <p id="rabotno_vreme_benzinska">@ViewBag.station.RabotnoVreme</p>
+                            </td>
+                            <td width="200px">
+                                <img src="~/Pictures/EmptyStar.png" alt="Star Rating" height="30px" width="30px" align="middle" id="1" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                                <img src="~/Pictures/EmptyStar.png" alt="Star Rating" height="30px" width="30px" align="middle" id="2" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                                <img src="~/Pictures/EmptyStar.png" alt="Star Rating" height="30px" width="30px" align="middle" id="3" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                                <img src="~/Pictures/EmptyStar.png" alt="Star Rating" height="30px" width="30px" align="middle" id="4" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                                <img src="~/Pictures/EmptyStar.png" alt="Star Rating" height="30px" width="30px" align="middle" id="5" class="rating" mid="@ViewBag.station.PetrolStationId" />
+
+                                @if (ViewBag.station.Ocena > 0)
+                                {
+                                    <span class="avr">@ViewBag.station.Ocena</span>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("img.rating").mouseover(function () {
+                giveRating($(this), "FilledStar.png");
+                $(this).css("cursor", "pointer");
+            });
+
+            $("img.rating").mouseout(function () {
+                giveRating($(this), "EmptyStar.png");
+                refilRating($(this));
+            });
+
+            $("img.rating").click(function (e) {
+
+                $(this).css('color', 'red');
+
+                var url = "/PetrolStations/PostRating?rating=" + parseInt($(this).attr("id")) + "&mid=" + parseInt($(this).attr("mid"));
+                $.post(url, null, function (data) {
+                    $(e.currentTarget).closest('tr').find('div.result').text(data).css('color', 'red')
+                });
+
+                location.reload();
+            });
+        });
+
+        function giveRating(img, image) {
+            img.attr("src", "/Pictures/" + image)
+                .prevAll("img.rating").attr("src", "/Pictures/" + image);
+        }
+
+        function refilRating(img1) {
+            var rt = $(img1).closest('tr').find("span.avr").text();
+            var img = $(img1).closest('tr').find("img[id='" + parseInt(rt) + "']");
+            img.attr("src", "/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Pictures/FilledStar.png");
+        }
+
+        $('#petrolsTable > tbody  > tr').each(function () {
+            var av = $(this).find("span.avr").text();
+
+            if (av != "" || av != null) {
+                var img = $(this).find("img[id='" + parseInt(av) + "']");
+                img.attr("src", "/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Pictures/FilledStar.png");
+            }
+        });
+
+    </script>
+
+}
