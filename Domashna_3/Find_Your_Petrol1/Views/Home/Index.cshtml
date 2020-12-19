@@ -10,63 +10,64 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="row">
-
-    <div class="jumbotron jumbotron-fluid">
-        <h2 style="margin:auto;">Барајте Бензинска Станица!</h2>
+        
+    <div class="jumbotron">
+        <h2 style="text-align:center; margin:auto;">Барајте Бензинска Станица!</h2>
     </div>
-
+    
 </div>
 
 @using (Html.BeginForm("FromLocationToDestination", "Home", FormMethod.Post))
 {
 
+    
+    <div class="row form-group" style="margin-top:50px;">
+        <div class="form-group">
+            <div class="col-md-5">
+                <h4>Вашата сегашна локација е: </h4> <p id="demo" style="visibility: hidden;color:red;">Геолокацијата не е поддржана од вашиот пребарувач!</p> <h4 id="latitude" style="visibility:hidden;"></h4><h4 id="longitude" style="visibility:hidden;"></h4>
+                <div id="googleMap" style="margin-top:-40px;"></div>
+                @Html.HiddenFor(m => m.usersLatitude, new { id = "userLat" })
+                @Html.HiddenFor(m => m.usersLongitude, new { id = "userLon" })
+            </div>
+            <div class="col-md-3">
 
-    <div class="row" style="margin-top:140px;">
+                <h4 style="margin-top:6px;">Изберете на кој начин ќе ја барате вашата бензинска: </h4>
+                @Html.DropDownListFor(m => m.traffic_model, new List<SelectListItem> {
+                    new SelectListItem{Text = "Најбрз начин", Value = "bestguess", Selected=true},
+                    new SelectListItem{Text = "Песимистички начин", Value = "pessimistic"},
+                    new SelectListItem{Text = "Оптимистички начин", Value = "optimistic"}
+                 }, "Изберете едно", new { @class = "form-control" })
 
-        <div class="col-md-5">
-            <h4>Вашата сегашна локација е: </h4> <p id="demo" style="visibility: hidden;color:red;">Геолокацијата не е поддржана од вашиот пребарувач!</p> <h4 id="latitude" style="visibility:hidden;"></h4><h4 id="longitude" style="visibility:hidden;"></h4>
-            <div id="googleMap"></div>
-            @Html.HiddenFor(m => m.usersLatitude, new { id = "userLat" })
-            @Html.HiddenFor(m => m.usersLongitude, new { id = "userLon" })
+            </div>
         </div>
-        <div class="col-md-3">
+        <div class="form-group">
+            <div class="col-md-3">
 
-            <h4>Изберете на кој начин ќе ја барате вашата бензинска: </h4>
-            @Html.DropDownListFor(m => m.traffic_model, new List<SelectListItem> {
-                new SelectListItem{Text = "Најбрз начин", Value = "bestguess", Selected=true},
-                new SelectListItem{Text = "Песимистички начин", Value = "pessimistic"},
-                new SelectListItem{Text = "Оптимистички начин", Value = "optimistic"}
-             }, "Изберете едно", new { @class = "form-control" })
+                <h4>Изберете бензинска пумпа:</h4>
 
+                <select name="@Html.NameFor(model => model.stationsLatitude)"
+                        class="form-control"
+                        id="stations"
+                        onchange="newStationSelected()">
+                    <option value="" value-lon="" id="closestPetrol">Најблиска бензинска пумпа</option>
+                    @foreach (var station in ViewBag.PetrolStationNames)
+                    {
+
+                        <option value="@station.GeografskaShirochina"
+                                value-lon="@station.Dolzhina">
+                            @station.ImeNaBenzinska
+                        </option>
+
+                    }
+                </select>
+                @Html.HiddenFor(m => m.stationsLongitude, new { id = "stationLon" })
+
+            </div>
         </div>
-
-        <div class="col-md-3">
-
-            <h4>Изберете бензинска пумпа:</h4>
-
-            <select name="@Html.NameFor(model => model.stationsLatitude)"
-                    class="form-control"
-                    id="stations"
-                    onchange="newStationSelected()">
-                <option value="" value-lon="" id="closestPetrol">Најблиска бензинска пумпа</option>
-                @foreach (var station in ViewBag.PetrolStationNames)
-                {
-
-                    <option value="@station.GeografskaShirochina"
-                            value-lon="@station.Dolzhina">
-                        @station.ImeNaBenzinska
-                    </option>
-
-                }
-            </select>
-            @Html.HiddenFor(m => m.stationsLongitude, new { id = "stationLon" })
-
-        </div>
-
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Пребарај" class="btn btn-default" />
+            <div class="col-md-10">
+                <input style="margin-top:10px;" type="submit" value="Пребарај" class="btn btn-primary" />
             </div>
         </div>
 
