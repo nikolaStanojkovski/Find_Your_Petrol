@@ -9,12 +9,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="row">
-
-    <div class="jumbotron">
-        <h2 style="text-align:center; margin:auto;">Барајте Бензинска Станица!</h2>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-offset-0 col-xs-12">
+                <h2 style="text-align:center; margin:auto;">Барајте Бензинска Станица!</h2>
+            </div>
+            <div class="col-xs-2" style="clear:right;">
+                <img class="img-responsive" src="~/Pictures/GasStation.png" style="height:50px; width:50px; float:right; margin-top:-25px; margin-right:-700px;" />
+                <img class="img-responsive" src="~/Pictures/Restaurant.png" style="height:50px; width:50px; float:right; margin-top:-25px; margin-right:-750px;" />
+                <img class="img-responsive" src="~/Pictures/ATM3.png" style="height:50px; width:50px; float:right; margin-top:-25px; margin-right:-800px;" />
+                <img class="img-responsive" src="~/Pictures/Toilet.jpg" style="height:50px; width:50px; float:right; margin-top:-25px; margin-right:-850px;" />
+            </div>
+        </div>
     </div>
-
 </div>
 
 @using (Html.BeginForm("FromLocationToDestination", "Home", FormMethod.Post))
