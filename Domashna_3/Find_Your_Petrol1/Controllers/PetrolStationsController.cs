@@ -18,6 +18,11 @@ namespace Find_Your_Petrol1.Controllers
         // GET: PetrolStations
         public ActionResult Index()
         {
+            if (this.User.Identity.Name != null && !this.User.Identity.Name.Equals(""))
+                ViewBag.isLogged = true;
+            else
+                ViewBag.isLogged = false;
+
             return View(db.PetrolStations.ToList());
         }
 

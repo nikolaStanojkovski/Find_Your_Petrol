@@ -34,7 +34,10 @@
                 @Html.DisplayNameFor(model => model.GeografskaShirochina)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ocena)
+                @if (ViewBag.isLogged)
+                {
+                    @Html.DisplayNameFor(model => model.Ocena)
+                }
             </th>
             <th></th>
         </tr>
@@ -42,19 +45,21 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImeNaBenzinska)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RabotnoVreme)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dolzhina)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GeografskaShirochina)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImeNaBenzinska)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RabotnoVreme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dolzhina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeografskaShirochina)
+            </td>
+            @if (ViewBag.isLogged)
+            {
                 <td>
                     @if (item.Ocena == 0)
                     {
@@ -65,17 +70,18 @@
                         @Html.DisplayFor(modelItem => item.Ocena)
                     }
                 </td>
-                <td>
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Измени", "Edit", new { id = item.PetrolStationId }) <p style="display:inline-block">|</p>
-                        @Html.ActionLink("Избриши", "Delete", new { id = item.PetrolStationId })
-                    }
-                    |
-                    @Html.ActionLink("Детали", "Details", new { id = item.PetrolStationId })
+            }
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Измени", "Edit", new { id = item.PetrolStationId }) <p style="display:inline-block">|</p>
+                    @Html.ActionLink("Избриши", "Delete", new { id = item.PetrolStationId })
+                }
+                |
+                @Html.ActionLink("Детали", "Details", new { id = item.PetrolStationId })
 
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
