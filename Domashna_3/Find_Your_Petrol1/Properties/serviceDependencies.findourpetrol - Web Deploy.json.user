@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "mssql2": {
-      "restored": true,
-      "restoreTime": "2020-12-20T14:12:39.3743263Z"
-    },
     "mssql1": {
       "restored": true,
       "restoreTime": "2020-12-20T14:08:12.5719593Z"
@@ -11,10 +7,22 @@
   },
   "parameters": {
     "resourceGroup": {
+      "Name": "resourceGroup",
       "Type": "resourceGroup",
       "Value": "PSPTech"
     },
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "81907e9a-6fd6-4617-b56c-bba1dfff0a9a"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "MyGroupPSPTech"
+    },
     "subscriptionId": {
+      "Name": "subscriptionId",
       "Type": "subscription",
       "Value": "89c8f091-d450-4b18-b454-e00bd4b3eea1"
     }
