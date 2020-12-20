@@ -33,12 +33,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.GeografskaShirochina)
             </th>
-            <th>
-                @if (ViewBag.isLogged)
-                {
+
+
+            @if (ViewBag.isLogged)
+            {
+                <th>
                     @Html.DisplayNameFor(model => model.Ocena)
-                }
-            </th>
+                </th>
+            }
+
             <th></th>
         </tr>
     </thead>
