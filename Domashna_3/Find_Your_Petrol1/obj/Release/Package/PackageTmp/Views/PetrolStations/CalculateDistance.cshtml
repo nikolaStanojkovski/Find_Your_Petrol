@@ -1,0 +1,51 @@
+﻿@model Find_Your_Petrol1.Models.DistanceCalculator
+
+@{
+    ViewBag.Title = "CalculateDistance";
+}
+
+<h2>Спореди оддалеченост на две бензински</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div>
+    <div>
+        <br />
+        <h3>Изберете ја првата бензинска пумпа:</h3>
+        @Html.DropDownListFor(m => m.FromId,
+        new SelectList(Model.petrols, "PetrolStationId", "ImeNaBenzinska"),
+        new { @class = "form-control" })
+        <br />
+    </div>
+    <br />
+    <div>
+
+        <h3>Изберете ја втората бензинска пумпа:</h3>
+        @Html.DropDownListFor(m => m.ToId,
+        new SelectList(Model.petrols, "PetrolStationId", "ImeNaBenzinska"),
+        new { @class = "form-control" })
+
+    </div>
+</div>
+<br /> <br />
+<div class="row">
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success">Calculate</button>
+    </div>
+</div>
+    
+}
+
+<div>
+    <div>
+        <div class="col-md-3">
+            <h3 style="margin-left:-15px;">Оддалеченост:</h3>
+        </div>
+        <div class="row col-md-3">
+            <h5 style="margin-top:30px; margin-left:-90px;" id="oddalecenost">@Model.kilometres km</h5>
+        </div>
+    </div>
+</div>
+<br /> <br />

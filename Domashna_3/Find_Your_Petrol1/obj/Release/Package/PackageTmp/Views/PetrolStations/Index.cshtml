@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Find_Your_Petrol1.Models.PetrolStation>
+
+@{
+    ViewBag.Title = "Бензински";
+}
+
+<h2>Сите бензински пумпи во Република Северна Македонија</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            @if (User.IsInRole("Administrator"))
+            {
+                @Html.ActionLink("Креирај нова бензинска", "Create")
+            }
+        </p>
+    </div>
+</div>
+
+
+<table class="table" id="petrolsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImeNaBenzinska)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RabotnoVreme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dolzhina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeografskaShirochina)
+            </th>
+            <th>
+                @if (ViewBag.isLogged)
+                {
+                    @Html.DisplayNameFor(model => model.Ocena)
+                }
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImeNaBenzinska)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RabotnoVreme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dolzhina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeografskaShirochina)
+            </td>
+            @if (ViewBag.isLogged)
+            {
+                <td>
+                    @if (item.Ocena == 0)
+                    {
+                        <p>Not rated</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Ocena)
+                    }
+                </td>
+            }
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Измени", "Edit", new { id = item.PetrolStationId }) <p style="display:inline-block">|</p>
+                    @Html.ActionLink("Избриши", "Delete", new { id = item.PetrolStationId })
+                }
+                |
+                @Html.ActionLink("Детали", "Details", new { id = item.PetrolStationId })
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+
+    <script>
+        $("#petrolsTable").DataTable();
+    </script>    
+    
+}

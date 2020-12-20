@@ -117,11 +117,11 @@
                     @if (ViewBag.isLogged == true)
                     {
                         <td>
-                            <img src="~/Pictures/EmptyStar.png" height="30px" width="30px" alt="Star Rating" align="middle" id="1" class="rating" mid="@ViewBag.station.PetrolStationId" />
-                            <img src="~/Pictures/EmptyStar.png" height="30px" width="30px" alt="Star Rating" align="middle" id="2" class="rating" mid="@ViewBag.station.PetrolStationId" />
-                            <img src="~/Pictures/EmptyStar.png" height="30px" width="30px" alt="Star Rating" align="middle" id="3" class="rating" mid="@ViewBag.station.PetrolStationId" />
-                            <img src="~/Pictures/EmptyStar.png" height="30px" width="30px" alt="Star Rating" align="middle" id="4" class="rating" mid="@ViewBag.station.PetrolStationId" />
-                            <img src="~/Pictures/EmptyStar.png" height="30px" width="30px" alt="Star Rating" align="middle" id="5" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                            <img src="~/Content/Pictures/EmptyStar.png" height="25px" width="25px" alt="Star Rating" align="middle" id="1" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                            <img src="~/Content/Pictures/EmptyStar.png" height="25px" width="25px" alt="Star Rating" align="middle" id="2" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                            <img src="~/Content/Pictures/EmptyStar.png" height="25px" width="25px" alt="Star Rating" align="middle" id="3" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                            <img src="~/Content/Pictures/EmptyStar.png" height="25px" width="25px" alt="Star Rating" align="middle" id="4" class="rating" mid="@ViewBag.station.PetrolStationId" />
+                            <img src="~/Content/Pictures/EmptyStar.png" height="25px" width="25px" alt="Star Rating" align="middle" id="5" class="rating" mid="@ViewBag.station.PetrolStationId" />
                             @if (ViewBag.station.Ocena > 0)
                             {
                                 <span class="avr">@ViewBag.station.Ocena</span>
@@ -163,15 +163,15 @@
         });
 
         function giveRating(img, image) {
-            img.attr("src", "/Pictures/" + image)
-                .prevAll("img.rating").attr("src", "/Pictures/" + image);
+            img.attr("src", "/Content/Pictures/" + image)
+                .prevAll("img.rating").attr("src", "/Content/Pictures/" + image);
         }
 
         function refilRating(img1)
         {
             var rt = $(img1).closest('tr').find("span.avr").text();
             var img = $(img1).closest('tr').find("img[id='" + parseInt(rt) + "']");
-            img.attr("src", "/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Pictures/FilledStar.png");
+            img.attr("src", "/Content/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Content/Pictures/FilledStar.png");
         }
 
         $("img.rating").click(function (e) {
@@ -190,7 +190,7 @@
             if (av != "" || av != null)
             {
                 var img = $(this).find("img[id='" + parseInt(av) + "']");
-                img.attr("src", "/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Pictures/FilledStar.png");
+                img.attr("src", "/Content/Pictures/FilledStar.png").prevAll("img.rating").attr("src", "/Content/Pictures/FilledStar.png");
             }
         });
 

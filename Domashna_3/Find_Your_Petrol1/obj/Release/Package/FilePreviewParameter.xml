@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="findourpetrol" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Nick\\Documents\\GitHub\\Find_Your_Petrol\\Domashna_3\\Find_Your_Petrol1\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nick\\Documents\\GitHub\\Find_Your_Petrol\\Domashna_3\\Find_Your_Petrol1\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="findourpetrol/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nick\\Documents\\GitHub\\Find_Your_Petrol\\Domashna_3\\Find_Your_Petrol1\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-Find_Your_Petrol1-20201205072955.mdf;Initial Catalog=aspnet-Find_Your_Petrol1-20201205072955;Integrated Security=True;&quot; providerName=&quot;System.Data.SqlClient" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nick\\Documents\\GitHub\\Find_Your_Petrol\\Domashna_3\\Find_Your_Petrol1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>
