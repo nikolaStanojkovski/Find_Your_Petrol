@@ -18,12 +18,7 @@ namespace Find_Your_Petrol1.Controllers
         // GET: PetrolStations
         public ActionResult Index()
         {
-            if (this.User.Identity.Name != null && !this.User.Identity.Name.Equals(""))
-                ViewBag.isLogged = true;
-            else
-                ViewBag.isLogged = false;
-
-            return View(db.PetrolStations.ToList());
+            return View();
         }
 
         // GET: PetrolStations/Details/5
@@ -39,17 +34,6 @@ namespace Find_Your_Petrol1.Controllers
                 return HttpNotFound();
             }
             return View(petrolStation);
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult PostRating(int rating, int mid)
-        {
-            PetrolStation station = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == mid);
-            station.Ocena = rating;
-            db.Entry(station).State = EntityState.Modified;
-
-            db.SaveChanges();
-            return Json("You rated this " + rating.ToString() + " star(s)");
         }
 
         private double CalculateEuqlide(DistanceCalculator model)
@@ -81,6 +65,35 @@ namespace Find_Your_Petrol1.Controllers
             model.kilometres = CalculateEuqlide(model);
             model.petrols = db.PetrolStations.ToList();
             return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult PostRating(int rating, int mid)
+        {
+            PetrolStation station = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == mid);
+            station.Ocena = rating;
+            db.Entry(station).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return Json("You rated this " + rating.ToString() + " star(s)");
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetIfAdmin()
+        {
+            if (this.User.IsInRole("Administrator") == true)
+                return Json(true, JsonRequestBehavior.AllowGet);
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetUserLogged()
+        {
+            if (this.User.Identity.Name != null && !this.User.Identity.Name.Equals(""))
+                return Json(true, JsonRequestBehavior.AllowGet);
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         //GET: PetrolStations/Map
@@ -118,7 +131,6 @@ namespace Find_Your_Petrol1.Controllers
         }
 
         // GET: PetrolStations/Create
-        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -139,65 +151,6 @@ namespace Find_Your_Petrol1.Controllers
             }
 
             return View(petrolStation);
-        }
-
-        // GET: PetrolStations/Edit/5
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PetrolStation petrolStation = db.PetrolStations.Find(id);
-            if (petrolStation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(petrolStation);
-        }
-
-        // POST: PetrolStations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PetrolStationId,ImeNaBenzinska,RabotnoVreme,Oddalecenost,Ocena")] PetrolStation petrolStation)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(petrolStation).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(petrolStation);
-        }
-
-        // GET: PetrolStations/Delete/5
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PetrolStation petrolStation = db.PetrolStations.Find(id);
-            if (petrolStation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(petrolStation);
-        }
-
-        // POST: PetrolStations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PetrolStation petrolStation = db.PetrolStations.Find(id);
-            db.PetrolStations.Remove(petrolStation);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

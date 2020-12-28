@@ -1,98 +1,310 @@
-﻿@model IEnumerable<Find_Your_Petrol1.Models.PetrolStation>
-
-@{
+﻿@{
     ViewBag.Title = "Бензински";
 }
+    <div id="showTables">
+        <h2>Сите бензински пумпи во Република Северна Македонија</h2> <br />
+        <a id="btn-create" class="btn btn-block" href="/PetrolStations/Create" style="background-color: forestgreen; color:white;">Add Petrol</a>
+        <hr />
 
-<h2>Сите бензински пумпи во Република Северна Македонија</h2>
-
-<div class="row">
-    <div class="col-md-6">
-        <p>
-            @if (User.IsInRole("Administrator"))
-            {
-                @Html.ActionLink("Креирај нова бензинска", "Create")
-            }
-        </p>
+        <table class="table" id="petrolsTable">
+            <thead>
+                <tr>
+                    <th>
+                        Име
+                    </th>
+                    <th>
+                        Работно време
+                    </th>
+                    <th>
+                        Географска должина
+                    </th>
+                    <th>
+                        Географска широчина
+                    </th>
+                    <th>
+                        Оценка
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="table_body">
+            </tbody>
+        </table>
     </div>
-</div>
+    
+    <div id="title_petrol">
+        <br />
+        <hr />
+        <h4>Бензинска пумпа</h4>
+        <hr />
+        <div id="details-form">
 
+            <dl class="dl-horizontal">
+                <dt>
+                    Име
+                </dt>
 
-<table class="table" id="petrolsTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ImeNaBenzinska)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RabotnoVreme)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dolzhina)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GeografskaShirochina)
-            </th>
+                <dd id="name_to_fill">
 
+                </dd>
 
-            @if (ViewBag.isLogged)
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Ocena)
-                </th>
-            }
+                <dt>
+                    Работно време
+                </dt>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImeNaBenzinska)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RabotnoVreme)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dolzhina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GeografskaShirochina)
-            </td>
-            @if (ViewBag.isLogged)
-            {
-                <td>
-                    @if (item.Ocena == 0)
-                    {
-                        <p>Not rated</p>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.Ocena)
-                    }
-                </td>
-            }
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Измени", "Edit", new { id = item.PetrolStationId }) <p style="display:inline-block">|</p>
-                    @Html.ActionLink("Избриши", "Delete", new { id = item.PetrolStationId })
-                }
-                |
-                @Html.ActionLink("Детали", "Details", new { id = item.PetrolStationId })
+                <dd id="work_time_to_fill">
 
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+                </dd>
 
+                <dt>
+                    Географска должина
+                </dt>
+
+                <dd id="geo_length_to_fill">
+
+                </dd>
+
+                <dt>
+                    Географска широчина
+                </dt>
+
+                <dd id="geo_width_to_fill">
+
+                </dd>
+
+                <dt>
+                    Оценка
+                </dt>
+
+                <dd id="rate_to_fill">
+
+                </dd>
+                <hr />
+                <br />
+                <a id="details-close" style="cursor: pointer;" class="btn btn-default">Back to Petrol List</a>
+        </div>
+        <div id="edit-form">
+
+            <div id="for_id" hidden="hidden"></div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Име</label>
+                <div class="col-md-10">
+                    <input id="for_name" class="form-control" />
+                </div>
+            </div>
+            <br /> <br /> <br />
+            <div class="form-group">
+                <label class="control-label col-md-2">Работно време</label>
+                <div class="col-md-10">
+                    <input id="for_work_time" class="form-control" />
+                </div>
+            </div>
+            <br /> <br />
+            <div class="form-group">
+                <label class="control-label col-md-2">Географска должина</label>
+                <div class="col-md-10">
+                    <input id="for_geo_length" class="form-control" />
+                </div>
+            </div>
+            <br /> <br />
+            <div class="form-group">
+                <label class="control-label col-md-2">Географска широчина</label>
+                <div class="col-md-10">
+                    <input id="for_geo_width" class="form-control" />
+                </div>
+            </div>
+            <br /> <br />
+            <div class="form-group">
+                <label class="control-label col-md-2">Оценка</label>
+                <div class="col-md-10">
+                    <input id="for_rating" class="form-control" />
+                </div>
+            </div>
+            <br /> <br /> <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="edit-close" value="Зачувај" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
 @section scripts {
 
     <script>
-        $("#petrolsTable").DataTable();
-    </script>    
+        $(document).ready(function () {
+
+            $("#btn-create").hide();
+            $("#title_petrol").hide();
+            $("#edit-form").hide();
+            $("#details-form").hide();
+
+            var isLogged = false;
+            var isAdmin = false;
+            var url = "/PetrolStations/GetUserLogged";
+            var urlSecond = "/PetrolStations/GetIfAdmin";
+            $.get(url, function (data) {
+                if (data)
+                    isLogged = true;
+            });
+
+            $.get(urlSecond, function (data) {
+                if (data)
+                    isAdmin = true;
+            });
+
+            $.ajax({
+                url: '/api/PetrolStations',
+                dataType: 'xml',
+                success: function (data) {
+
+                    $(data).find('ArrayOfPetrolStation PetrolStation').each(function () {
+                        var name = $(this).find('ImeNaBenzinska').text();
+                        var geo_length = $(this).find('Dolzhina').text();
+                        var geo_width = $(this).find('GeografskaShirochina').text();
+                        var rating = $(this).find('Ocena').text();
+                        var work_time = $(this).find('RabotnoVreme').text();
+                        var id = $(this).find('PetrolStationId').text();
+
+                        var to_rate = "Not Rated";
+
+                       if (rating > 0)
+                            to_rate = rating + "";
+
+                        var loggedAtt = "";
+
+                        if (isLogged == true) {
+                            loggedAtt += "<a class='js-details btn-link' style='cursor: pointer;'>Details</a>";
+                            if (isAdmin)
+                                loggedAtt += "| <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Delete</a> "
+                                + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Edit</a>";
+                        }
+
+                        var row = "<tr> <td class='name-petrol'>" + name + "</td> <td class='work-time'>" + work_time + "</td> <td class='geo-length'> "
+                            + geo_length + " </td> <td class='geo-width'> " +
+                            + geo_width + "</td> <td class='rate-petrol'> "
+                            + to_rate + " </td> <td>" + loggedAtt + "</td > </tr > ";
+
+                        $("#table_body").append(row);
+                    });
+
+                    var table = $("#petrolsTable").DataTable();
+
+                    if (isLogged && isAdmin)
+                        $("#btn-create").show();
+
+                    $("#petrolsTable .js-delete").click(function () {
+                        button = $(this);
+                        bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
+                            function (result) {
+                                if (result) {
+                                    $.ajax({
+                                        method: "DELETE",
+                                        url: "/api/PetrolStations/" + button.attr("delete-id"),
+                                        success: function () {
+                                            table.row(button.parents("tr")).remove().draw();
+                                        }
+                                    })
+                                }
+                            })
+                    })
+
+                    $("#petrolsTable .js-details").click(function () {
+
+                        $("#title_petrol").show();
+                        $("#showTables").hide();
+                        $("#edit-form").hide();
+                        $("#details-form").show();
+
+                        var name = $(this).parents("tr").find(".name-petrol").text();
+                        var work_time = $(this).parents("tr").find(".work-time").text();
+                        var geo_length = $(this).parents("tr").find(".geo-length").text();
+                        var geo_width = $(this).parents("tr").find(".geo-width").text();
+                        var rating = $(this).parents("tr").find(".rate-petrol").text();
+
+                        $("#name_to_fill").text("");
+                        $("#work_time_to_fill").text("");
+                        $("#geo_length_to_fill").text("");
+                        $("#geo_width_to_fill").text("");
+                        $("#rate_to_fill").text("");
+
+                        $("#name_to_fill").append(name);
+                        $("#work_time_to_fill").append(work_time);
+                        $("#geo_length_to_fill").append(geo_length);
+                        $("#geo_width_to_fill").append(geo_width);
+                        $("#rate_to_fill").append(rating);
+
+                    })
+
+                    $("#details-close").click(function () {
+
+                        $("#title_petrol").show();
+                        $("#showTables").show();
+                        $("#edit-form").hide();
+                        $("#details-form").hide();
+
+                    })
+
+                    $("#petrolsTable .js-edit").click(function () {
+
+                        $("#title_petrol").show();
+                        $("#showTables").hide();
+                        $("#details-form").hide();
+                        $("#edit-form").show();
+
+                        var id = $(this).attr("edit-id");
+                        var name = $(this).parents("tr").find(".name-petrol").text();
+                        var work_time = $(this).parents("tr").find(".work-time").text();
+                        var geo_length = $(this).parents("tr").find(".geo-length").text();
+                        var geo_width = $(this).parents("tr").find(".geo-width").text();
+                        var rating = $(this).parents("tr").find(".rate-petrol").text();
+
+                        $("#for_id").text("");
+
+                        $("#for_id").text(id);
+                        $("#for_name").val(name);
+                        $("#for_work_time").val(work_time);
+                        $("#for_geo_length").val(geo_length);
+                        $("#for_geo_width").val(geo_width);
+                        $("#for_rating").val(rating);
+
+                    })
+
+                    $("#edit-close").click(function () {
+
+                        var rating = $("#for_rating").val();
+                        if (rating == 'Not Rated')
+                            rating = 0;
+
+                        var name = $("#for_name").val().split(" ");
+                        var fullName = "";
+                        for (var i = 0; i < name.length; i++) {
+                            if (i == 0)
+                                fullName += name[i];
+                            else
+                                fullName += "+" + name[i];
+                        }
+
+                        if (fullName.charAt(fullName.length - 1) == '+')
+                            fullName = fullName.substr(0, fullName.length - 1);
+
+                        $.ajax({
+                            method: "PUT",
+                            url: "/api/PetrolStations?id=" + $("#for_id").text() + "&name=" + fullName
+                                + "&work_time=" + $("#for_work_time").val() + "&geo_length=" + $("#for_geo_length").val()
+                                + "&geo_width=" + $("#for_geo_width").val() + "&rating=" + rating,
+                            success: function () {
+                                location.replace("/PetrolStations/Index");
+                            }
+                        })
+
+                    })
+                }
+
+            })
+
+        })
+    </script>
     
 }
