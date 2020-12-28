@@ -50,7 +50,10 @@ namespace Find_Your_Petrol1.Controllers.api
             petrolStation.RabotnoVreme = work_time;
             petrolStation.Dolzhina = Double.Parse( geo_length );
             petrolStation.GeografskaShirochina = Double.Parse(geo_width);
-            petrolStation.Ocena = float.Parse(rating);
+            if (rating.Contains("Not Rated"))
+                petrolStation.Ocena = 0;
+            else
+                petrolStation.Ocena = float.Parse(rating);
 
             db.Entry(petrolStation).State = EntityState.Modified;
 
@@ -75,12 +78,9 @@ namespace Find_Your_Petrol1.Controllers.api
 
         // POST: api/PetrolStations
         [ResponseType(typeof(PetrolStation))]
-        public IHttpActionResult PostPetrolStation(PetrolStation petrolStation)
+        public IHttpActionResult PostPetrolStation(string name, string work_time, string geo_length, string geo_width, string rating)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            PetrolStation petrolStation = new PetrolStation(name, work_time, Double.Parse(geo_width), Double.Parse(geo_length), float.Parse(rating));
 
             db.PetrolStations.Add(petrolStation);
             db.SaveChanges();

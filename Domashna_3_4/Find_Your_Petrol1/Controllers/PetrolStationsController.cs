@@ -21,21 +21,6 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        // GET: PetrolStations/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PetrolStation petrolStation = db.PetrolStations.Find(id);
-            if (petrolStation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(petrolStation);
-        }
-
         private double CalculateEuqlide(DistanceCalculator model)
         {
             PetrolStation from = db.PetrolStations.FirstOrDefault(m => m.PetrolStationId == model.FromId);
@@ -128,29 +113,6 @@ namespace Find_Your_Petrol1.Controllers
             ViewBag.fuels = fuelList;
 
             return View(model);
-        }
-
-        // GET: PetrolStations/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PetrolStations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PetrolStationId,ImeNaBenzinska,RabotnoVreme,Oddalecenost,Ocena")] PetrolStation petrolStation)
-        {
-            if (ModelState.IsValid)
-            {
-                db.PetrolStations.Add(petrolStation);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(petrolStation);
         }
 
         protected override void Dispose(bool disposing)

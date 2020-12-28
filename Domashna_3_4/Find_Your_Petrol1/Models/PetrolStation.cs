@@ -27,6 +27,14 @@ namespace Find_Your_Petrol1.Models
         {
             // TipNaGorivo = new List<Fuel>();
         }
+        public PetrolStation(string ime, string vreme, double shirina, double dolzhina, float ocena)
+        {
+            this.ImeNaBenzinska = ime;
+            this.RabotnoVreme = vreme;
+            this.GeografskaShirochina = shirina;
+            this.Dolzhina = dolzhina;
+            this.Ocena = ocena;
+        }
 
         public PetrolStation(string ime, List<Fuel> tipoviGorivo, string vreme, double shirina, double dolzhina, float ocena)
         {

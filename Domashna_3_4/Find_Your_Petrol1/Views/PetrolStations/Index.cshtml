@@ -3,7 +3,7 @@
 }
     <div id="showTables">
         <h2>Сите бензински пумпи во Република Северна Македонија</h2> <br />
-        <a id="btn-create" class="btn btn-block" href="/PetrolStations/Create" style="background-color: forestgreen; color:white;">Add Petrol</a>
+        <a id="btn-create" class="btn btn-block" style="background-color: forestgreen; color:white;">Add Petrol</a>
         <hr />
 
         <table class="table" id="petrolsTable">
@@ -142,6 +142,7 @@
 
             var isLogged = false;
             var isAdmin = false;
+            var createOrEdit = false;
             var url = "/PetrolStations/GetUserLogged";
             var urlSecond = "/PetrolStations/GetIfAdmin";
             $.get(url, function (data) {
@@ -177,7 +178,7 @@
                         if (isLogged == true) {
                             loggedAtt += "<a class='js-details btn-link' style='cursor: pointer;'>Details</a>";
                             if (isAdmin)
-                                loggedAtt += "| <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Delete</a> "
+                                loggedAtt += " | <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Delete</a> "
                                 + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Edit</a>";
                         }
 
@@ -194,116 +195,165 @@
                     if (isLogged && isAdmin)
                         $("#btn-create").show();
 
-                    $("#petrolsTable .js-delete").click(function () {
-                        button = $(this);
-                        bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
-                            function (result) {
-                                if (result) {
-                                    $.ajax({
-                                        method: "DELETE",
-                                        url: "/api/PetrolStations/" + button.attr("delete-id"),
-                                        success: function () {
-                                            table.row(button.parents("tr")).remove().draw();
-                                        }
-                                    })
+                }
+            })
+
+        })
+
+        $("#petrolsTable").on('draw.dt', function () {
+
+            $("#petrolsTable .js-delete").on('click', function () {
+                button = $(this);
+                bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/api/PetrolStations/" + button.attr("delete-id"),
+                                success: function () {
+                                    table.row(button.parents("tr")).remove().draw();
                                 }
                             })
-                    })
-
-                    $("#petrolsTable .js-details").click(function () {
-
-                        $("#title_petrol").show();
-                        $("#showTables").hide();
-                        $("#edit-form").hide();
-                        $("#details-form").show();
-
-                        var name = $(this).parents("tr").find(".name-petrol").text();
-                        var work_time = $(this).parents("tr").find(".work-time").text();
-                        var geo_length = $(this).parents("tr").find(".geo-length").text();
-                        var geo_width = $(this).parents("tr").find(".geo-width").text();
-                        var rating = $(this).parents("tr").find(".rate-petrol").text();
-
-                        $("#name_to_fill").text("");
-                        $("#work_time_to_fill").text("");
-                        $("#geo_length_to_fill").text("");
-                        $("#geo_width_to_fill").text("");
-                        $("#rate_to_fill").text("");
-
-                        $("#name_to_fill").append(name);
-                        $("#work_time_to_fill").append(work_time);
-                        $("#geo_length_to_fill").append(geo_length);
-                        $("#geo_width_to_fill").append(geo_width);
-                        $("#rate_to_fill").append(rating);
-
-                    })
-
-                    $("#details-close").click(function () {
-
-                        $("#title_petrol").show();
-                        $("#showTables").show();
-                        $("#edit-form").hide();
-                        $("#details-form").hide();
-
-                    })
-
-                    $("#petrolsTable .js-edit").click(function () {
-
-                        $("#title_petrol").show();
-                        $("#showTables").hide();
-                        $("#details-form").hide();
-                        $("#edit-form").show();
-
-                        var id = $(this).attr("edit-id");
-                        var name = $(this).parents("tr").find(".name-petrol").text();
-                        var work_time = $(this).parents("tr").find(".work-time").text();
-                        var geo_length = $(this).parents("tr").find(".geo-length").text();
-                        var geo_width = $(this).parents("tr").find(".geo-width").text();
-                        var rating = $(this).parents("tr").find(".rate-petrol").text();
-
-                        $("#for_id").text("");
-
-                        $("#for_id").text(id);
-                        $("#for_name").val(name);
-                        $("#for_work_time").val(work_time);
-                        $("#for_geo_length").val(geo_length);
-                        $("#for_geo_width").val(geo_width);
-                        $("#for_rating").val(rating);
-
-                    })
-
-                    $("#edit-close").click(function () {
-
-                        var rating = $("#for_rating").val();
-                        if (rating == 'Not Rated')
-                            rating = 0;
-
-                        var name = $("#for_name").val().split(" ");
-                        var fullName = "";
-                        for (var i = 0; i < name.length; i++) {
-                            if (i == 0)
-                                fullName += name[i];
-                            else
-                                fullName += "+" + name[i];
                         }
-
-                        if (fullName.charAt(fullName.length - 1) == '+')
-                            fullName = fullName.substr(0, fullName.length - 1);
-
-                        $.ajax({
-                            method: "PUT",
-                            url: "/api/PetrolStations?id=" + $("#for_id").text() + "&name=" + fullName
-                                + "&work_time=" + $("#for_work_time").val() + "&geo_length=" + $("#for_geo_length").val()
-                                + "&geo_width=" + $("#for_geo_width").val() + "&rating=" + rating,
-                            success: function () {
-                                location.replace("/PetrolStations/Index");
-                            }
-                        })
-
                     })
-                }
+            })
+
+            $("#petrolsTable .js-details").on('click', function () {
+
+                $("#title_petrol").show();
+                $("#showTables").hide();
+                $("#edit-form").hide();
+                $("#details-form").show();
+
+                var name = $(this).parents("tr").find(".name-petrol").text();
+                var work_time = $(this).parents("tr").find(".work-time").text();
+                var geo_length = $(this).parents("tr").find(".geo-length").text();
+                var geo_width = $(this).parents("tr").find(".geo-width").text();
+                var rating = $(this).parents("tr").find(".rate-petrol").text();
+
+                $("#name_to_fill").text("");
+                $("#work_time_to_fill").text("");
+                $("#geo_length_to_fill").text("");
+                $("#geo_width_to_fill").text("");
+                $("#rate_to_fill").text("");
+
+                $("#name_to_fill").append(name);
+                $("#work_time_to_fill").append(work_time);
+                $("#geo_length_to_fill").append(geo_length);
+                $("#geo_width_to_fill").append(geo_width);
+                $("#rate_to_fill").append(rating);
 
             })
 
+            $("#details-close").on('click', function () {
+
+                $("#title_petrol").show();
+                $("#showTables").show();
+                $("#edit-form").hide();
+                $("#details-form").hide();
+
+            })
+
+            $("#petrolsTable .js-edit").on('click', function () {
+
+                $("#title_petrol").show();
+                $("#showTables").hide();
+                $("#details-form").hide();
+                $("#edit-form").show();
+
+                var id = $(this).attr("edit-id");
+                var name = $(this).parents("tr").find(".name-petrol").text();
+                var work_time = $(this).parents("tr").find(".work-time").text();
+                var geo_length = $(this).parents("tr").find(".geo-length").text();
+                var geo_width = $(this).parents("tr").find(".geo-width").text();
+                var rating = $(this).parents("tr").find(".rate-petrol").text();
+
+                $("#for_id").text("");
+
+                $("#for_id").text(id);
+                $("#for_name").val(name);
+                $("#for_work_time").val(work_time);
+                $("#for_geo_length").val(geo_length);
+                $("#for_geo_width").val(geo_width);
+                $("#for_rating").val(rating);
+
+                createOrEdit = false;
+
+            })
+
+            $("#btn-create").on('click', function () {
+
+                $("#title_petrol").show();
+                $("#showTables").hide();
+                $("#details-form").hide();
+                $("#edit-form").show();
+
+                createOrEdit = true;
+
+                $("#for_name").val("");
+                $("#for_work_time").val("");
+                $("#for_geo_length").val("");
+                $("#for_geo_width").val("");
+                $("#for_rating").val("");
+
+            })
+
+            $("#edit-close").on('click', function () {
+
+                if (createOrEdit) {
+                    var rating = $("#for_rating").val();
+                    if (isNaN(rating))
+                        rating = 0;
+
+                    var name = $("#for_name").val().split(" ");
+                    var fullName = "";
+                    for (var i = 0; i < name.length; i++) {
+                        if (i == 0)
+                            fullName += name[i];
+                        else
+                            fullName += "+" + name[i];
+                    }
+
+                    if (fullName.charAt(fullName.length - 1) == '+')
+                        fullName = fullName.substr(0, fullName.length);
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/api/PetrolStations?name=" + fullName
+                            + "&work_time=" + $("#for_work_time").val() + "&geo_length=" + $("#for_geo_length").val()
+                            + "&geo_width=" + $("#for_geo_width").val() + "&rating=" + rating,
+                        success: function () {
+                            location.replace("/PetrolStations/Index");
+                        }
+                    })
+                } else {
+                    var rating = $("#for_rating").val();
+                    if (rating == 'Not Rated')
+                        rating = 0;
+
+                    var name = $("#for_name").val().split(" ");
+                    var fullName = "";
+                    for (var i = 0; i < name.length; i++) {
+                        if (i == 0)
+                            fullName += name[i];
+                        else
+                            fullName += "+" + name[i];
+                    }
+
+                    if (fullName.charAt(fullName.length - 1) == '+')
+                        fullName = fullName.substr(0, fullName.length - 1);
+
+                    $.ajax({
+                        method: "PUT",
+                        url: "/api/PetrolStations?id=" + $("#for_id").text() + "&name=" + fullName
+                            + "&work_time=" + $("#for_work_time").val() + "&geo_length=" + $("#for_geo_length").val()
+                            + "&geo_width=" + $("#for_geo_width").val() + "&rating=" + rating,
+                        success: function () {
+                            location.replace("/PetrolStations/Index");
+                        }
+                    })
+                }
+            })
         })
     </script>
     
