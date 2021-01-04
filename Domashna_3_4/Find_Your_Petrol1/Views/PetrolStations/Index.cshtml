@@ -1,132 +1,142 @@
-    <div id="showTables">
-        <h2>Сите бензински пумпи во Република Северна Македонија</h2> <br />
-        <a id="btn-create" class="btn btn-block" style="background-color: forestgreen; color:white;">Add Petrol</a>
-        <hr />
+﻿
 
-        <table class="table" id="petrolsTable">
-            <thead>
-                <tr>
-                    <th>
-                        Име
-                    </th>
-                    <th>
-                        Работно време
-                    </th>
-                    <th>
-                        Географска должина
-                    </th>
-                    <th>
-                        Географска широчина
-                    </th>
-                    <th>
-                        Оценка
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="table_body">
-            </tbody>
-        </table>
-    </div>
-    
-    <div id="title_petrol">
+<h2 id="headTitle"></h2>
+
+<div id="showTables">
+
+    <a id="btn-create" class="btn btn-block" style="background-color: forestgreen; color:white;">Add Petrol</a>
+    <hr />
+
+    <table class="table" id="petrolsTable">
+        <thead>
+            <tr>
+                <th id="head_name">
+
+                </th>
+                <th id="head_work_time">
+
+                </th>
+                <th id="head_geo_length">
+
+                </th>
+                <th id="head_geo_width">
+
+                </th>
+                <th id="head_rating">
+
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="table_body">
+        </tbody>
+    </table>
+</div>
+
+<div id="title_petrol">
+    <br />
+    <hr />
+    <h4>Бензинска пумпа</h4>
+    <hr />
+    <div id="details-form">
+
+        <dl class="dl-horizontal">
+            <dt>
+                Име
+            </dt>
+
+            <dd id="name_to_fill">
+
+            </dd>
+
+            <dt>
+                Работно време
+            </dt>
+
+            <dd id="work_time_to_fill">
+
+            </dd>
+
+            <dt>
+                Географска должина
+            </dt>
+
+            <dd id="geo_length_to_fill">
+
+            </dd>
+
+            <dt>
+                Географска широчина
+            </dt>
+
+            <dd id="geo_width_to_fill">
+
+            </dd>
+
+            <dt>
+                Оценка
+            </dt>
+
+            <dd id="rate_to_fill">
+
+            </dd>
+        </dl>
+        <hr />
         <br />
-        <hr />
-        <h4>Бензинска пумпа</h4>
-        <hr />
-        <div id="details-form">
+        <a id="details-close" style="cursor: pointer;" class="btn btn-default">Back to Petrol List</a>
+    </div>
+    <div id="edit-form">
 
-            <dl class="dl-horizontal">
-                <dt>
-                    Име
-                </dt>
+        <div id="for_id" hidden="hidden"></div>
 
-                <dd id="name_to_fill">
-
-                </dd>
-
-                <dt>
-                    Работно време
-                </dt>
-
-                <dd id="work_time_to_fill">
-
-                </dd>
-
-                <dt>
-                    Географска должина
-                </dt>
-
-                <dd id="geo_length_to_fill">
-
-                </dd>
-
-                <dt>
-                    Географска широчина
-                </dt>
-
-                <dd id="geo_width_to_fill">
-
-                </dd>
-
-                <dt>
-                    Оценка
-                </dt>
-
-                <dd id="rate_to_fill">
-
-                </dd>
-                <hr />
-                <br />
-                <a id="details-close" style="cursor: pointer;" class="btn btn-default">Back to Petrol List</a>
+        <div class="form-group">
+            <label class="control-label col-md-2">Име</label>
+            <div class="col-md-10">
+                <input id="for_name" class="form-control" />
+            </div>
         </div>
-        <div id="edit-form">
 
-            <div id="for_id" hidden="hidden"></div>
+        <br /> <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Работно време</label>
+            <div class="col-md-10">
+                <input id="for_work_time" class="form-control" />
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label class="control-label col-md-2">Име</label>
-                <div class="col-md-10">
-                    <input id="for_name" class="form-control" />
-                </div>
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Географска должина</label>
+            <div class="col-md-10">
+                <input id="for_geo_length" class="form-control" />
             </div>
-            <br /> <br /> <br />
-            <div class="form-group">
-                <label class="control-label col-md-2">Работно време</label>
-                <div class="col-md-10">
-                    <input id="for_work_time" class="form-control" />
-                </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Географска широчина</label>
+            <div class="col-md-10">
+                <input id="for_geo_width" class="form-control" />
             </div>
-            <br /> <br />
-            <div class="form-group">
-                <label class="control-label col-md-2">Географска должина</label>
-                <div class="col-md-10">
-                    <input id="for_geo_length" class="form-control" />
-                </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Оценка</label>
+            <div class="col-md-10">
+                <input id="for_rating" class="form-control" />
             </div>
-            <br /> <br />
-            <div class="form-group">
-                <label class="control-label col-md-2">Географска широчина</label>
-                <div class="col-md-10">
-                    <input id="for_geo_width" class="form-control" />
-                </div>
-            </div>
-            <br /> <br />
-            <div class="form-group">
-                <label class="control-label col-md-2">Оценка</label>
-                <div class="col-md-10">
-                    <input id="for_rating" class="form-control" />
-                </div>
-            </div>
-            <br /> <br /> <br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="edit-close" value="Зачувај" class="btn btn-default" />
-                </div>
+        </div>
+
+        <br /> <br /> <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="edit-close" value="Зачувај" class="btn btn-default" />
             </div>
         </div>
     </div>
-    
+</div>
+
 @section scripts {
 
     <script>
@@ -137,11 +147,21 @@
             $("#edit-form").hide();
             $("#details-form").hide();
 
+            $("#head_name").append("Name");
+            $("#head_work_time").append("Работно време");
+            $("#head_geo_length").append("Географска должина");
+            $("#head_geo_width").append("Географска широчина");
+            $("#head_rating").append("Оценка");
+
+            $("#headTitle").append("Листа на бензински пумпи во Република Северна Македонија");
+
             var isLogged = false;
             var isAdmin = false;
             var createOrEdit = false;
+
             var url = "/PetrolStations/GetUserLogged";
             var urlSecond = "/PetrolStations/GetIfAdmin";
+
             $.get(url, function (data) {
                 if (data)
                     isLogged = true;
@@ -167,7 +187,7 @@
 
                         var to_rate = "Not Rated";
 
-                       if (rating > 0)
+                        if (rating > 0)
                             to_rate = rating + "";
 
                         var loggedAtt = "";
@@ -176,7 +196,7 @@
                             loggedAtt += "<a class='js-details btn-link' style='cursor: pointer;'>Details</a>";
                             if (isAdmin)
                                 loggedAtt += " | <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Delete</a> "
-                                + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Edit</a>";
+                                    + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Edit</a>";
                         }
 
                         var row = "<tr> <td class='name-petrol'>" + name + "</td> <td class='work-time'>" + work_time + "</td> <td class='geo-length'> "
@@ -353,5 +373,4 @@
             })
         })
     </script>
-    
 }

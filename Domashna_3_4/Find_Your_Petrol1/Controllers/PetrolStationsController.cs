@@ -10,7 +10,6 @@ using Find_Your_Petrol1.Models;
 
 namespace Find_Your_Petrol1.Controllers
 {
-    
     public class PetrolStationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -105,7 +104,7 @@ namespace Find_Your_Petrol1.Controllers
                 fuelList.Add("Непознато");
             }
 
-            if(this.User.Identity != null && !this.User.Identity.Name.Equals(""))
+            if (this.User.Identity != null && !this.User.Identity.Name.Equals(""))
                 ViewBag.isLogged = true;
             else
                 ViewBag.isLogged = false;
