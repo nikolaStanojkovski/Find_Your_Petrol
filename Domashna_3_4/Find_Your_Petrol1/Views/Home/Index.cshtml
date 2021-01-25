@@ -66,7 +66,7 @@
 
                         <option value="@station.GeografskaShirochina"
                                 value-lon="@station.Dolzhina">
-                            @station.ImeNaBenzinska
+                            @station.Prikaz
                         </option>
 
                     }
@@ -75,7 +75,8 @@
 
             </div>
         </div>
-    </div> <br />
+    </div>
+    <br />
     <div class="row form-group">
         <div class="col-md-12">
             <button class="btn-block btn-primary" style="height: 32px" type="submit">Пребарај</button>
@@ -146,7 +147,9 @@
         }
 
         function calculateDistance(userLat, userLon, petrolLat, petrolLon) {
+
             // Ke presmetam evklidovo rastojanie pomegju segasnata pozicija na korisnikot i dadenata benzinska stanica!
+
             return Math.sqrt(Math.pow((userLat - petrolLat), 2) + Math.pow((userLon - petrolLon), 2));
 
         }

@@ -13,8 +13,9 @@ namespace Find_Your_Petrol1.Models
         [Required]
         public string Comment { get; set; }
         public string CurrentUserUsername { get; set; }
+
         [Required]
-        [Range(0, 5)]
+        [Range(1, 5)]
         public double Rating { get; set; }
 
         public UserFeedback()

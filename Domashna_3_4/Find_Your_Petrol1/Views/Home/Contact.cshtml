@@ -18,49 +18,52 @@
 </address>
 
 <hr />
-<hr />
-
+<h3>Форма за оставање на повратна информација</h3> <br />
 @if (ViewBag.NotLogged == true)
 {
     <p>@ViewBag.Message</p>
 
 }
-else if (Session["DoneFeedback"].ToString().Equals("yes"))
+else if (ViewBag.AlreadySent == "yes")
 {
     <p>Благодариме за вашата повратна информација</p>
 }
 else
 {
+    
     using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <div class="form-group">
             <h3>Внеси коментар за апликацијата: </h3>
             @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             <h3>Оцени ја апликацијата: </h3>
             @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
         </div>
+
         @Html.HiddenFor(m => m.FeedbackId)
         @Html.HiddenFor(m => m.CurrentUserUsername)
+
         <br />
         <div class="form-group">
-            <button type="submit">Остави повратна информација</button>
+            <button class="btn btn-group-justified" style="height: 33px;" type="submit">Остави повратна информација</button>
         </div>
     }
 }
-<br />
-<hr />
+
 <hr />
 <br />
 <h3>Повратни информации оставени од нашите корисници:</h3>
 <br />
 <table class="table">
     <tr>
-        <th>Username</th>
-        <th>Comment</th>
-        <th>Rating</th>
+        <th>Корисник</th>
+        <th>Коментар</th>
+        <th>Оценка</th>
     </tr>
     @foreach (var item in ViewBag.Feedbacks)
     {
@@ -73,13 +76,6 @@ else
             </td>
             <td>
                 @item.Rating
-            </td>
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Измени", "Edit", new { id = item.FeedbackId }) <p style="display:inline-block">|</p>
-                    @Html.ActionLink("Избриши", "Delete", new { id = item.FeedbackId })
-                }
             </td>
         </tr>
     }

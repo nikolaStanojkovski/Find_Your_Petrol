@@ -37,7 +37,12 @@ namespace Find_Your_Petrol1.Controllers
         {
             ViewBag.NotLogged = false;
             ViewBag.Message = "Контакт страна";
-            Session["DoneFeedback"] = "no";
+            UserFeedback uf = db.UserFeedbacks.FirstOrDefault(p => p.CurrentUserUsername.Equals(this.User.Identity.Name));
+            if (uf != null)
+                ViewBag.AlreadySent = "yes";
+            else
+                ViewBag.AlreadySent = "no";
+
             ViewBag.Feedbacks = db.UserFeedbacks.ToList();
             if (this.User.Identity.Name != null && !this.User.Identity.Name.Equals(""))
             {
@@ -58,13 +63,17 @@ namespace Find_Your_Petrol1.Controllers
         [HttpPost]
         public ActionResult Contact(UserFeedback model)
         {
-            ViewBag.Message = "Your contact page";
-            Session["DoneFeedback"] = "yes";
-            db.UserFeedbacks.Add(model);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Your contact page";
+                Session["DoneFeedback"] = "yes";
+                db.UserFeedbacks.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Contact");
+            }
 
             ViewBag.Feedbacks = db.UserFeedbacks.ToList();
-            return View();
+            return View(model);
         }
     }
 }

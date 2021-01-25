@@ -12,8 +12,7 @@ namespace Find_Your_Petrol1.Models
         public int PetrolStationId { get; set; }
         [Display(Name = "Име на бензинската пумпа")]
         public String ImeNaBenzinska { get; set; }
-        [Display(Name = "Тип на гориво")]
-        public List<Fuel> TipNaGorivo { get; set; }
+        public String TipoviGorivo { get; set; }
         [Display(Name = "Работно време" )]
         public String RabotnoVreme { get; set; }
         [Display(Name = "Географска широчина")]
@@ -22,28 +21,22 @@ namespace Find_Your_Petrol1.Models
         public double Dolzhina { get; set; }
         [Display(Name = "Оцена")]
         public float Ocena { get; set; }
+        public String Prikaz { get; set; }
 
         public PetrolStation()
         {
             // TipNaGorivo = new List<Fuel>();
         }
-        public PetrolStation(string ime, string vreme, double shirina, double dolzhina, float ocena)
+        public PetrolStation(string ime, string tipovi, string vreme, double shirina, double dolzhina, float ocena)
         {
             this.ImeNaBenzinska = ime;
             this.RabotnoVreme = vreme;
+            this.TipoviGorivo = tipovi;
             this.GeografskaShirochina = shirina;
             this.Dolzhina = dolzhina;
             this.Ocena = ocena;
+            this.Prikaz = ime + " (" + shirina + ", " + dolzhina + ")";
         }
-
-        public PetrolStation(string ime, List<Fuel> tipoviGorivo, string vreme, double shirina, double dolzhina, float ocena)
-        {
-            this.ImeNaBenzinska = ime;
-            this.TipNaGorivo = tipoviGorivo;
-            this.RabotnoVreme = vreme;
-            this.GeografskaShirochina = shirina;
-            this.Dolzhina = dolzhina;
-            this.Ocena = ocena;
-        }
+    
     }
 }

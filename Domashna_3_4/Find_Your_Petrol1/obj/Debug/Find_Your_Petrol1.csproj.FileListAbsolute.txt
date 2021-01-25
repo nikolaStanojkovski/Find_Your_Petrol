@@ -1122,11 +1122,12 @@ C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\b
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csprojAssemblyReference.cache
-C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.initial.resources
-C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.second.resources
-C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.PetrolStationFuelsModelAdded.resources
-C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.GenerateResource.cache
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.CoreCompileInputs.cache
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.CopyComplete
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.dll
 C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.pdb
+C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.initial.resources
+C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.GenerateResource.cache
+C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.Second.resources
+C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.third.resources
+C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.Fourth.resources

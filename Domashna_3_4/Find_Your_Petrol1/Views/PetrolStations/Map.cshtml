@@ -9,9 +9,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
-
-<div class="row center-block" style="margin-top:140px;">
-    <div class="col-md-7" style="margin-right:28px;">
+<div class="row center-block" style="margin-top:50px;">
+    <div class="col-md-7" style="margin-right:28px; margin-bottom: 35px;">
         <div class="row">
             <h3>Вашата почетна адреса: </h3> <h3 id="pocetna_adresa"></h3>
         </div>
@@ -85,6 +84,7 @@
         </div>
 
     </div>
+    <br /> <br /> <br /> <br /> <br /> <br />
     <div class="row">
         <table class="table" id="petrolsTable">
             <thead>
@@ -105,12 +105,7 @@
                 <tr>
                     <td><p id="ime_benzinska">@ViewBag.station.ImeNaBenzinska</p></td>
                     <td><p id="lokacija_benzinska">(@ViewBag.station.GeografskaShirochina, @ViewBag.station.Dolzhina)</p></td>
-                    <td>
-                        @foreach (var item in ViewBag.fuels)
-                        {
-                            <p>@item</p>
-                        }
-                    </td>
+                    <td><p>@ViewBag.station.TipoviGorivo</p></td>
                     <td><p id="oddalecenost_od_benzinska"></p></td>
                     <td><p id="potrebno_vreme"</td>
                     <td><p id="rabotno_vreme_benzinska">@ViewBag.station.RabotnoVreme</p></td>

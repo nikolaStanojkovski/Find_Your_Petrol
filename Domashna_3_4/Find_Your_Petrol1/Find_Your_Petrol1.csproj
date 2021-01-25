@@ -186,22 +186,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012140023541_initial.cs" />
-    <Compile Include="Migrations\202012140023541_initial.Designer.cs">
-      <DependentUpon>202012140023541_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202101241938563_initial.cs" />
+    <Compile Include="Migrations\202101241938563_initial.designer.cs">
+      <DependentUpon>202101241938563_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012171402332_second.cs" />
-    <Compile Include="Migrations\202012171402332_second.Designer.cs">
-      <DependentUpon>202012171402332_second.cs</DependentUpon>
+    <Compile Include="Migrations\202101242202571_Second.cs" />
+    <Compile Include="Migrations\202101242202571_Second.designer.cs">
+      <DependentUpon>202101242202571_Second.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012181153404_PetrolStationFuelsModelAdded.cs" />
-    <Compile Include="Migrations\202012181153404_PetrolStationFuelsModelAdded.Designer.cs">
-      <DependentUpon>202012181153404_PetrolStationFuelsModelAdded.cs</DependentUpon>
+    <Compile Include="Migrations\202101251208369_third.cs" />
+    <Compile Include="Migrations\202101251208369_third.designer.cs">
+      <DependentUpon>202101251208369_third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101251315015_Fourth.cs" />
+    <Compile Include="Migrations\202101251315015_Fourth.designer.cs">
+      <DependentUpon>202101251315015_Fourth.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddRoleToUsers.cs" />
     <Compile Include="Models\DistanceCalculator.cs" />
+    <Compile Include="Models\FavouritePetrol.cs" />
     <Compile Include="Models\FromLocationToDestination.cs" />
     <Compile Include="Models\Fuel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -379,9 +384,13 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\Pictures\ATM3.png" />
+    <Content Include="Content\Pictures\facebook.png" />
     <Content Include="Content\Pictures\GasStation.png" />
+    <Content Include="Content\Pictures\instagram.png" />
     <Content Include="Content\Pictures\Restaurant.png" />
     <Content Include="Content\Pictures\Toilet.jpg" />
+    <Content Include="Content\Pictures\twitter.png" />
+    <Content Include="Content\Pictures\youtube.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -528,7 +537,6 @@
     <Content Include="Views\PetrolStations\CalculateDistance.cshtml" />
     <Content Include="Views\PetrolStations\Map.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -543,17 +551,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012140023541_initial.resx">
-      <DependentUpon>202012140023541_initial.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\202101241938563_initial.resx">
+      <DependentUpon>202101241938563_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012171402332_second.resx">
-      <DependentUpon>202012171402332_second.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\202101242202571_Second.resx">
+      <DependentUpon>202101242202571_Second.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012181153404_PetrolStationFuelsModelAdded.resx">
-      <DependentUpon>202012181153404_PetrolStationFuelsModelAdded.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\202101251208369_third.resx">
+      <DependentUpon>202101251208369_third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101251315015_Fourth.resx">
+      <DependentUpon>202101251315015_Fourth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

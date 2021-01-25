@@ -10,9 +10,9 @@ namespace Find_Your_Petrol1.Models
     {
         [Key]
         public int PetrolStation_PetrolStationId { get; set; }
-        public System.Int64 Fuel_FuelId { get; set; }
+        public int Fuel_FuelId { get; set; }
 
-        PetrolStationFuels(int station_id, System.Int64 fuel_id)
+        public PetrolStationFuels(int station_id, int fuel_id)
         {
             this.PetrolStation_PetrolStationId = station_id;
             this.Fuel_FuelId = fuel_id;

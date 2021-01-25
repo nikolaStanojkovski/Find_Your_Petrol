@@ -30,9 +30,14 @@ namespace Find_Your_Petrol1.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Find_Your_Petrol1.Models.PetrolStation> PetrolStations { get; set; }
+        public DbSet<PetrolStation> PetrolStations { get; set; }
+
         public DbSet<Fuel> Fuels { get; set; }
+
         public DbSet<UserFeedback> UserFeedbacks { get; set; }
+
         public DbSet<PetrolStationFuels> PetrolStationFuels { get; set; }
+
+        public DbSet<FavouritePetrol> FavouritePetrols { get; set; }
     }
 }
