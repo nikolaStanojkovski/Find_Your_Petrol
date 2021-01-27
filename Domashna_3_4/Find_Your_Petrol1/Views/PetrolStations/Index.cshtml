@@ -1,6 +1,4 @@
-﻿
-
-<h2 id="headTitle"></h2>
+﻿<h2 id="headTitle"></h2>
 <hr />
 
 <div id="fav-petrol-block">
@@ -198,6 +196,7 @@
             var isLogged = false;
             var isAdmin = false;
             var createOrEdit = false;
+            var table = $("petrolsTable");
 
             var url = "/PetrolStations/GetUserLogged";
             var urlSecond = "/PetrolStations/GetIfAdmin";
@@ -282,7 +281,6 @@
         
 
         $("#petrolsTable").on('draw.dt', function () {
-
             $("#petrolsTable .js-delete").click(function () {
                 button = $(this);
                 bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
@@ -290,9 +288,9 @@
                         if (result) {
                             $.ajax({
                                 method: "DELETE",
-                                url: "/api/PetrolStations/" + button.attr("delete-id"),
+                                url: "/api/PetrolStations?PetrolStationId=" + button.attr("delete-id"),
                                 success: function () {
-                                    table.row(button.parents("tr")).remove().draw();
+                                    button.parents("tr").remove().draw();
                                 }
                             })
                         }
@@ -531,9 +529,9 @@
 
                         $.ajax({
                             method: "POST",
-                            url: "/api/PetrolStations?name=" + fullName.trim()
-                                + "&work_time=" + $("#for_work_time").val().trim() + "&geo_length=" + $("#for_geo_length").val().trim()
-                                + "&geo_width=" + $("#for_geo_width").val().trim() + "&types_oils=" + types_oils.trim() + "&rating=" + rating,
+                            url: "/api/PetrolStations?ImeNaBenzinska=" + fullName.trim()
+                                + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                                + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating,
                             success: function () {
                                 location.replace("/PetrolStations/Index");
                             }
@@ -559,9 +557,9 @@
 
                         $.ajax({
                             method: "PUT",
-                            url: "/api/PetrolStations?id=" + $("#for_id").text() + "&name=" + fullName.trim()
-                                + "&work_time=" + $("#for_work_time").val().trim() + "&geo_length=" + $("#for_geo_length").val().trim()
-                                + "&geo_width=" + $("#for_geo_width").val().trim() + "&types_oils=" + types_oils.trim() + "&rating=" + rating,
+                            url: "/api/PetrolStations?PetrolStationId=" + $("#for_id").text() + "&ImeNaBenzinska=" + fullName.trim()
+                                + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                                + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating,
                             success: function () {
                                 location.replace("/PetrolStations/Index");
                             }
@@ -577,7 +575,7 @@
                         if (result) {
                             $.ajax({
                                 method: "POST",
-                                url: "/PetrolStations/AddFavouritePetrol/" + id,
+                                url: "/PetrolStations/AddFavouritePetrol?PetrolStationId=" + id,
                                 success: function (data) {
                                     var display = $("#favourite-petrol-head").attr('display');
                                     if (data.indexOf("Already has!") != -1) {

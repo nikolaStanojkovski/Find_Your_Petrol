@@ -9,30 +9,65 @@ using System.Web.Mvc;
 
 namespace Find_Your_Petrol1.Controllers
 {
+    /// <summary>
+    /// Класата <c>HomeController</c>
+    /// се справува со барањата поврзани
+    /// со погледот Home
+    /// </summary>
     public class HomeController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Методот <c>Index</c>
+        /// се спавува со GET барањата на патеката /Home/Index
+        /// го враќа стандардниот поглед заедно со објект
+        /// </summary>
+        /// <returns>
+        /// Враќа поглед со објект од типот FromLocationToDestination
+        /// </returns>
         public ActionResult Index()
         {
             FromLocationToDestination model = new FromLocationToDestination();
             ViewBag.PetrolStationNames = db.PetrolStations.ToArray();
             return View(model);
         }
-
+        /// <summary>
+        /// Методот <c>FromLocationToDestination</c>
+        /// се повикува при POST барање на патеката /Home/FromLocationToDestination
+        /// </summary>
+        /// <param name="model">Објект од типот FromLocationToDestination</param>
+        /// <returns>
+        /// Враќа редирекција до друг метод во класата
+        /// </returns>
         [HttpPost]
         public ActionResult FromLocationToDestination(FromLocationToDestination model)
         {
             return RedirectToAction("Map", "PetrolStations", model);
 
         }
-
+        /// <summary>
+        /// Методот <c>About</c>
+        /// се справува со барањето на За нас страната
+        /// </summary>
+        /// <returns>
+        /// Враќа поглед
+        /// </returns>
         public ActionResult About()
         {
             ViewBag.Message = "Опис на апликацијата";
             return View();
         }
-
+        /// <summary>
+        /// Методот <c>Contact</c>
+        /// се справува со GET барањата на патеката /Home/Contact и
+        /// проверува дали најавениот корисник ја има оценето нашата апликација
+        /// и соодветно враќа поглед
+        /// </summary>
+        /// <returns>
+        /// Доколку корисникот не е најавен се враќа поглед од Контакт страната,
+        /// во спротивно се враќа Поглед заедно со објект од типот UserFeedback
+        /// </returns>
         public ActionResult Contact()
         {
             ViewBag.NotLogged = false;
@@ -59,7 +94,15 @@ namespace Find_Your_Petrol1.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Методот <c>Contact</c>
+        /// се справува со POST барањата на патеката /Home/Contact
+        /// </summary>
+        /// <param name="model">Објект од типот UserFeedback</param>
+        /// <returns>
+        /// Доколку корисникот внел валидни податоци за објектот од тип UserFeedback, тогаш враќа редирекција до GET барањето на Contact методот
+        /// во спротивно враќа поглед со истиот модел од влезниот параметар
+        /// </returns>
         [HttpPost]
         public ActionResult Contact(UserFeedback model)
         {

@@ -147,13 +147,14 @@
             $("img.rating").click(function (e) {
 
                 $(this).css('color', 'red');
-
-                var url = "/PetrolStations/PostRating?rating=" + parseInt($(this).attr("id")) + "&mid=" + parseInt($(this).attr("mid"));
+                console.log("IMG RATING CLICKED");
+                var url = "/PetrolStations/PostRating?Ocena=" + parseInt($(this).attr("id")) + "&PetrolStationId=" + parseInt($(this).attr("mid"));
+                console.log(parseInt($(this).attr("id")) + " " + parseInt($(this).attr("mid")));
                 $.post(url, null, function (data) {
                     $(e.currentTarget).closest('tr').find('div.result').text(data).css('color', 'red')
-                });
-                location.reload();   
-                
+                }).done(function () {
+                    location.reload();
+                });   
             });
         });
 
@@ -172,8 +173,7 @@
         $("img.rating").click(function (e) {
 
             $(this).css('color', 'red');
-
-            var url = "/PetrolStations/PostRating?rating=" + parseInt($(this).attr("id")) + "&mid=" + parseInt($(this).attr("mid"));
+            var url = "/PetrolStations/PostRating?Ocena=" + parseInt($(this).attr("id")) + "&PetrolStationId=" + parseInt($(this).attr("mid"));
             $.post(url, null, function (data) {
                 $(e.currentTarget).closest('tr').find('div.result').text(data).css('color', 'red')
             });

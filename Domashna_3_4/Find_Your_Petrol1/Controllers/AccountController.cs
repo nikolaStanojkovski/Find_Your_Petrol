@@ -14,6 +14,10 @@ using System.Collections.Generic;
 namespace Find_Your_Petrol1.Controllers
 {
     [Authorize]
+    ///<summary>
+    /// Класата <c>AccountController</c>
+    /// се грижи за управување со корисниците во апликацијата
+    /// </summary>
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -22,7 +26,6 @@ namespace Find_Your_Petrol1.Controllers
         public AccountController()
         {
         }
-
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
