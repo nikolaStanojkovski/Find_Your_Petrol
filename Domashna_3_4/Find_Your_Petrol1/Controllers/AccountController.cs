@@ -22,16 +22,27 @@ namespace Find_Your_Petrol1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        /// <summary>
+        /// Методот <c>AccountController</c>
+        /// е дефолтниот конструктор за оваа класа
+        /// </summary>
         public AccountController()
         {
         }
+        /// <summary>
+        /// Методот <c>AccountController</c>
+        /// е конструктор со параметри
+        /// </summary>
+        /// <param name="userManager">Објект од типот ApplicationUserManager</param>
+        /// <param name="signInManager">Објект од типот ApplicationSignInManager</param>
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        /// <summary>
+        /// Стандарден гетер и стандарден сетер на променливата _signInManager
+        /// </summary>
         public ApplicationSignInManager SignInManager
         {
             get
@@ -43,7 +54,9 @@ namespace Find_Your_Petrol1.Controllers
                 _signInManager = value; 
             }
         }
-
+        /// <summary>
+        /// Стандарден гетер и сетер за променливата _userManager
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
@@ -55,8 +68,14 @@ namespace Find_Your_Petrol1.Controllers
                 _userManager = value;
             }
         }
-
-        //
+        /// <summary>
+        /// Методот <c>Login</c>
+        /// се справува со GET барањата на патека /Account/Login
+        /// </summary>
+        /// <param name="returnUrl">Аргумент од типот String, што ни означува повратен URL</param>
+        /// <returns>
+        /// Враќа поглед
+        /// </returns>
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -65,7 +84,16 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>Login</c>
+        /// се справува со POST барањата на патека /Account/Login
+        /// и притоа врши валидација на најавениот корисник
+        /// </summary>
+        /// <param name="model">Објект од типот LoginViewModel</param>
+        /// <param name="returnUrl">Аргумент од типот String, што ни означува повратен URL</param>
+        /// <returns>
+        /// Во зависност од тоа дали е успешна најавата, враќа соодветен поглед
+        /// </returns>
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -77,8 +105,6 @@ namespace Find_Your_Petrol1.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -95,7 +121,17 @@ namespace Find_Your_Petrol1.Controllers
             }
         }
 
-        //
+        /// <summary>
+        /// Методот <c>VerifyCode</c>
+        /// се справува со GET барањата на патека /Account/VerifyCode
+        /// </summary>
+        /// <param name="provider">Променлива од типот string</param>
+        /// <param name="returnUrl">Променлива од типот string</param>
+        /// <param name="rememberMe">Променлива од типот bool</param>
+        /// <returns>
+        /// Во зависност од тоа дали корисникот е најавен, 
+        /// се враќа соодветен поглед
+        /// </returns>
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -108,7 +144,15 @@ namespace Find_Your_Petrol1.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>VerifyCode</c>
+        /// се справува со POST барањата на патека /Account/VerifyCode
+        /// </summary>
+        /// <param name="model">Објект од типот VerifyCodeViewModel</param>
+        /// <returns>
+        /// Во зависност од тоа дали корисникот е најавен, 
+        /// се враќа соодветен поглед
+        /// </returns>
         // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
@@ -138,7 +182,13 @@ namespace Find_Your_Petrol1.Controllers
             }
         }
 
-        //
+        /// <summary>
+        /// Методот <c>Register</c>
+        /// се справува со GET барањата на патека /Account/Register
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -146,7 +196,15 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>Register</c>
+        /// се справува со POST барањата на патека /Account/Register
+        /// и регистрира нов корисник во апликацијата
+        /// </summary>
+        /// <param name="model">Објект од типот RegisterViewModel</param>
+        /// <returns>
+        /// Враќа соодветен поглед во зависност дали корисникот се регистрирал успешно
+        /// </returns>
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -160,23 +218,23 @@ namespace Find_Your_Petrol1.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ConfirmEmail</c>
+        /// се справува со GET барањата на патека /Account/ConfirmEmail
+        /// и му овозможува на корисникот да го потврдни својот е-маил
+        /// </summary>
+        /// <param name="userId">Променлива од типот string, што претставува Id на корисникот</param>
+        /// <param name="code">Променлива од типот string, што претставува код за корисникот</param>
+        /// <returns></returns>
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -189,7 +247,13 @@ namespace Find_Your_Petrol1.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ForgotPassword</c>
+        /// се справува со GET барањата на патека /Account/ForgotPassword
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
@@ -197,7 +261,15 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ForgotPassword</c>
+        /// се справува со POST барањата на патека /Account/ForgotPassword
+        /// и му овозможува на корисникот да ја промени својата лозинка
+        /// </summary>
+        /// <param name="model">Објект од типот ForgotPasswordViewModel</param>
+        /// <returns>
+        /// Враќа соодветен поглед, во зависност дали поминало успешно внесувањето на нова лозинка
+        /// </returns>
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
@@ -209,23 +281,20 @@ namespace Find_Your_Petrol1.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ForgotPasswordConfirmation</c>
+        /// се справува со GET барањата на патека /Account/ForgotPasswordConfirmation
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
@@ -233,7 +302,16 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ResetPassword</c>
+        /// се справува со GET барањата на патека /Account/ResetPassword
+        /// и му овозможува враќање на корисникот поглед за соодветна промена на лозинката
+        /// </summary>
+        /// <param name="code">Променлива од типот string</param>
+        /// <returns>
+        /// Враќа соодветен поглед доколку влезниот параметар е null, ќе врати поглед со порака Error,
+        /// во спротивно ќе врати само поглед
+        /// </returns>
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -241,7 +319,16 @@ namespace Find_Your_Petrol1.Controllers
             return code == null ? View("Error") : View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ResetPassword</c>
+        /// се справува со POST барањата на патека /Account/ResetPassword
+        /// и му овозможува на корисникот да ја промени својата лозинка
+        /// </summary>
+        /// <param name="model">Објект од типот ResetPasswordViewModel</param>
+        /// <returns>
+        /// Доколку влезниот параметар е валиден, ќе врати редирекција кон /Account/ResetPasswordConfirmation
+        /// во спротивно ќе го врати истиот поглед
+        /// </returns>
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
@@ -267,7 +354,13 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ResetPasswordConfirmation</c>
+        /// се справува со GET барањата на патека /Account/ResetPasswordConfirmation
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
@@ -275,18 +368,32 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ExternalLogin</c>
+        /// се справува со POST барањата на патека /Account/ExternalLogin
+        /// и му овозможува на корисникот да се најави со некој надворешен провајдер
+        /// </summary>
+        /// <param name="provider">Променлива од типот string, претставува провајдер</param>
+        /// <param name="returnUrl">Променлива од типот string, што ни означува патека на која ќе се редиректира при успешно извршена работа</param>
+        /// <returns></returns>
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
+        /// <summary>
+        /// Методот <c>SendCode</c>
+        /// се справува со GET барањата на патека /Account/SendCode
+        /// </summary>
+        /// <param name="returnUrl">Променлива од типот string, што ни означува патека на која ќе се редиректира при успешно извршена работа</param>
+        /// <param name="rememberMe">Променлива од типот bool, што означува дали корисникот да остане најавен и после исклучувањето на апликацијата</param>
+        /// <returns>
+        /// Враќа соодветен поглед, доколку корисникот е најавен враќа поглед со порака Error
+        /// </returns>
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
@@ -301,7 +408,14 @@ namespace Find_Your_Petrol1.Controllers
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>SendCode</c>
+        /// се справува со POST барањата на патека /Account/SendCode
+        /// </summary>
+        /// <param name="model">Објект од типот SendCodeViewModel</param>
+        /// <returns>
+        /// Враќа соодветен поглед доколку настанала грешка или редирекртира кон /Account/VerifyCode
+        /// </returns>
         // POST: /Account/SendCode
         [HttpPost]
         [AllowAnonymous]
@@ -321,7 +435,16 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ExternalLoginCallback</c>
+        /// се справува со GET барањата на патека /Account/ExternalLoginCallback
+        /// и му овозможува на корисникот да се најави преку надворешен провајдер
+        /// </summary>
+        /// <param name="returnUrl">Променлива од типот string, што ни означува патека на која ќе се редиректира при успешно извршена работа</param>
+        /// <returns>
+        /// Доколку корисникот не е најавен на апликација враќа редирекција кон /Account/Login,
+        /// во спротивно враќа соодветен поглед
+        /// </returns>
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -332,7 +455,6 @@ namespace Find_Your_Petrol1.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
@@ -351,7 +473,16 @@ namespace Find_Your_Petrol1.Controllers
             }
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ExternalLoginConfirmation</c>
+        /// се справува со POST барањата на патека /Account/ExternalLoginConfirmation
+        /// и му овозможува на корисникот којшто е најавен преку надворешен провајдер да ја потврди својата најава
+        /// </summary>
+        /// <param name="model">Објект од типот ExternalLoginConfirmationViewModel</param>
+        /// <param name="returnUrl">Променлива од типот string, што ни означува патека на која ќе се редиректира при успешно извршена работа</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
@@ -389,7 +520,14 @@ namespace Find_Your_Petrol1.Controllers
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>LogOff</c>
+        /// се спавува со POST барањата на патека /Account/LogOff
+        /// и му овозможува на корисникот да се одјави од апликацијата
+        /// </summary>
+        /// <returns>
+        /// Враќа редирекција кон /Home/Index
+        /// </returns>
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -399,7 +537,13 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ExternalLoginFailure</c>
+        /// се справува со GET барањата на патека /Account/ExternalLoginFailure
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
@@ -407,7 +551,16 @@ namespace Find_Your_Petrol1.Controllers
             return View();
         }
 
-        // Add user to role!
+        /// <summary>
+        /// Методот <c>AddUserToRole</c>
+        /// се справува со GET барањата на патека /Account/AddUserToRole
+        /// и му овозможува на корисникот кој е во улога “Administrator“
+        /// да додели улога на некој друг корисник
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
+        // GET: /Account/AddUserToRole
         [Authorize(Roles = "Administrator")]
         public ActionResult AddUserToRole()
         {
@@ -415,8 +568,10 @@ namespace Find_Your_Petrol1.Controllers
             model.Roles.Add("Administrator");
             model.Roles.Add("User");
             ViewBag.UserName = this.User.Identity.Name;
+
             var AllUsers = UserManager.Users.ToList();
             var WithoutCurrentUser = new List<ApplicationUser>();
+
             foreach(var item in AllUsers)
             {
                 if(item.UserName != this.User.Identity.Name)
@@ -424,10 +579,22 @@ namespace Find_Your_Petrol1.Controllers
                     WithoutCurrentUser.Add(item);
                 }
             }
+
             ViewBag.Users = WithoutCurrentUser;
             return View(model);
         }
 
+        /// <summary>
+        /// Методот <c>AddUserToRole</c>
+        /// се спраува со POST барањата на патека /Account/AddUserToRole
+        /// и му овозможува на корисникот кој е во улога “Administrator“
+        /// да додели улога на некој друг корисник
+        /// </summary>
+        /// <param name="model">Објект од типот AddRoleToUsers</param>
+        /// <returns>
+        /// Враќа редирекција кон /Home/Index при успешно завршена работа,
+        /// во спротивно враќа објект од типот HttpNotFound
+        /// </returns>
         [HttpPost]
         public ActionResult AddUserToRole(AddRoleToUsers model)
         {

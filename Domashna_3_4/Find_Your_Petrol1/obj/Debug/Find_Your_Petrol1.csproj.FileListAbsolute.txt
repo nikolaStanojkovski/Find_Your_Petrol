@@ -1240,7 +1240,6 @@ C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csprojAssemblyReference.cache
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.initial.resources
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.Second.resources
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.Migrations.third.resources
@@ -1250,3 +1249,4 @@ C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csproj.CopyComplete
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.dll
 C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.pdb
+C:\Users\pavlo\Source\Repos\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1\obj\Debug\Find_Your_Petrol1.csprojAssemblyReference.cache

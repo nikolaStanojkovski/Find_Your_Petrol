@@ -11,21 +11,35 @@ using Find_Your_Petrol1.Models;
 namespace Find_Your_Petrol1.Controllers
 {
     [Authorize]
+    ///<summary>
+    ///Класата <c>ManageController</c>
+    ///се справува со корисниците и нивната состојба во нашата апликација
+    /// </summary>
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        /// <summary>
+        /// Методот <c>ManageController</c>
+        /// е дефолтниот конструктор за оваа класа
+        /// </summary>
         public ManageController()
         {
         }
-
+        /// <summary>
+        /// Методот <c>ManageController</c>
+        /// е конструктор со параметри
+        /// </summary>
+        /// <param name="userManager">Објект од типот ApplicationUserManager</param>
+        /// <param name="signInManager">Објект од типот ApplicationSignInManager</param>
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        /// <summary>
+        /// Стандарден гетер и стандарден сетер на променливата _signInManager
+        /// </summary>
         public ApplicationSignInManager SignInManager
         {
             get
@@ -37,7 +51,9 @@ namespace Find_Your_Petrol1.Controllers
                 _signInManager = value; 
             }
         }
-
+        /// <summary>
+        /// Стандарден гетер и сетер за променливата _userManager
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
@@ -50,17 +66,24 @@ namespace Find_Your_Petrol1.Controllers
             }
         }
 
-        //
+        /// <summary>
+        /// Методот <c>Index</c>
+        /// се справува со GET барањата на патека /Manage/Index
+        /// </summary>
+        /// <param name="message">Овјект од типот ManageMessageId</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Вашата лозинка е променета."
+                : message == ManageMessageId.SetPasswordSuccess ? "Вашата лозинка е сетирана."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Вашиот two-factor authentication provider е сетиран."
+                : message == ManageMessageId.Error ? "Се појави грешка."
+                : message == ManageMessageId.AddPhoneSuccess ? "Вашиот телефонски број е додаден."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Вашиот телефонски број е избришан."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -75,7 +98,15 @@ namespace Find_Your_Petrol1.Controllers
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>RemoveLogin</c>
+        /// се справува со POST барањата на патека /Manage/RemoveLogin
+        /// </summary>
+        /// <param name="loginProvider">Аргумент од типот string</param>
+        /// <param name="providerKey">Аргумент од типот string</param>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/ManageLogins
+        /// </returns>
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -99,14 +130,29 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>AddPhoneNumber</c>
+        /// се справува со GET барањата на патека /Manage/AddPhoneNumber
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>AddPhoneNumber</c>
+        /// се спавува со POST барањата на патека /Manage/AddPhoneNumber
+        /// и овозможува додавање на телефонски број на корисник
+        /// </summary>
+        /// <param name="model">Објект од типот AddPhoneNumberViewModel</param>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/VerifyPhoneNumber доколку влезниот објект е валиден,
+        /// во спротивно го враќа истиот поглед од GET барањето
+        /// </returns>
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -116,7 +162,6 @@ namespace Find_Your_Petrol1.Controllers
             {
                 return View(model);
             }
-            // Generate the token and send it
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             if (UserManager.SmsService != null)
             {
@@ -130,7 +175,14 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>EnableTwoFactorAuthentication</c>
+        /// се справува со POST барањата на патека /Manage/EnableTwoFactorAuthentication
+        /// и му овозможува на корисникот да вклучи TwoFactorAuthentication
+        /// </summary>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/Index
+        /// </returns>
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -145,7 +197,14 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
+        /// <summary>
+        /// Методот <c>DisableTwoFactorAuthentication</c>
+        /// се справува со POST барањата на патека /Manage/DisableTwoFactorAuthentication
+        /// и му овозможува на корисникот да го исклучи TwoFactorAuthentication
+        /// </summary>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/Index
+        /// </returns>
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,16 +219,31 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
+        /// <summary>
+        /// Методот <c>VerifyPhoneNumber</c>
+        /// се справува со GET барањата на патека /Manage/VerifyPhoneNumber
+        /// </summary>
+        /// <param name="phoneNumber">Аргумент од тип string, што претставува телефонски број</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
+
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>VerifyPhoneNumber</c>
+        /// се справува со POST барањата на патека /Manage/VerifyPhoneNumber
+        /// и му овозможува на корисникот да го верификува својот телефонскиот број
+        /// </summary>
+        /// <param name="model">Објект од типот VerifyPhoneNumberViewModel</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // POST: /Manage/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -189,12 +263,18 @@ namespace Find_Your_Petrol1.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>RemovePhoneNumber</c>
+        /// се справува со POST барањата на патека /Manage/RemovePhoneNumber
+        /// и му овозможува на корисникот да го избрише својот телефонски број
+        /// </summary>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/Index
+        /// </returns>
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -213,14 +293,28 @@ namespace Find_Your_Petrol1.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ChangePassword</c>
+        /// се справува со GET барањата на патека /Manage/ChangePassword
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ChangePassword</c>
+        /// се справува со POST барањата на патека /Manage/ChangePassword
+        /// и му овозможува на корисникот да ја промени својата лозинка
+        /// </summary>
+        /// <param name="model">Објект од типот ChangePasswordViewModel</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -244,14 +338,28 @@ namespace Find_Your_Petrol1.Controllers
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>SetPassword</c>
+        /// се спавува со GET барањата на патека /Manage/SetPassword
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
             return View();
         }
 
-        //
+        /// <summary>
+        /// Методот <c>SetPassword</c>
+        /// се справува со POST барањата на патека /Manage/SetPassword
+        /// и му овозможува на корисникот да ја сетира својата лозинка
+        /// </summary>
+        /// <param name="model">Објект од типот SetPasswordViewModel</param>
+        /// <returns>
+        /// Враќа редирекција кон /Manage/Index, доколку се извршило успешно работата
+        /// </returns>
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -276,7 +384,14 @@ namespace Find_Your_Petrol1.Controllers
             return View(model);
         }
 
-        //
+        /// <summary>
+        /// Методот <c>ManageLogins</c>
+        /// се справува со GET барањата на патека /Manage/ManageLogins
+        /// </summary>
+        /// <param name="message">Објект од типот ManageMessageId</param>
+        /// <returns>
+        /// Враќа соодветен поглед
+        /// </returns>
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
@@ -299,7 +414,14 @@ namespace Find_Your_Petrol1.Controllers
             });
         }
 
-        //
+        /// <summary>
+        /// Методот <c>LinkLogin</c>
+        /// се справува со POST барањата на патека /Manage/LinkLogin
+        /// </summary>
+        /// <param name="provider">Аргумент од тип string, кој претставува надворешен провајдер</param>
+        /// <returns>
+        /// Враќа објект од типот AccountController
+        /// </returns>
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -309,7 +431,13 @@ namespace Find_Your_Petrol1.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
-        //
+        /// <summary>
+        /// Методот <c>LinkLoginCallback</c>
+        /// се справува со GET барањата на патека /Manage/LinkLoginCallback
+        /// </summary>
+        /// <returns>
+        /// Враќа соодветна редирекција кон /Manage/ManageLogins
+        /// </returns>
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {

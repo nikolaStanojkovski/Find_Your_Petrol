@@ -100,7 +100,7 @@
         </dl>
         <hr />
         <br />
-        <a id="details-close" style="cursor: pointer;" class="btn btn-default">Back to Petrol List</a>
+        <a style="cursor: pointer;" class="btn btn-default details-close">Назад кон листата</a>
     </div>
     <div id="edit-form">
 
@@ -170,6 +170,11 @@
                 <input id="edit-close" value="Зачувај" class="btn btn-default" />
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a  style="cursor: pointer;" class="btn btn-default details-close">Назад кон листата</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -177,12 +182,14 @@
 
     <script>
 
-        $(document).ready(function () {
-
+        function hideExtras() {
             $("#btn-create").hide();
             $("#title_petrol").hide();
             $("#edit-form").hide();
             $("#details-form").hide();
+        }
+
+        function appendTexts() {
 
             $("#head_name").append("Име");
             $("#head_work_time").append("Работно време");
@@ -192,42 +199,358 @@
             $("#head_rating").append("Оценка");
 
             $("#headTitle").append("Листа на бензински пумпи во Република Северна Македонија");
+        }
+
+        function favouritePetrolNotChosen() {
+
+            $("#favourite-petrol-head").append("Немате изберено омилена бензинска пумпа");
+            $("#favourite-petrol-head").attr('style', 'color: gray; font-style: italic;');
+            $("#btn-favourite-petrol").hide();
+
+        }
+
+        function userIsNotLogged() {
+
+            $("#favourite-petrol-head").append("Најавете се за да ја добиете функционалноста за избирање на омилена бензинска");
+            $("#favourite-petrol-head").attr('style', 'color: red;');
+            $("#favourite-petrol-head").attr('style', 'color: red; font-style: italic;');
+            $("#btn-favourite-petrol").hide();
+
+        }
+
+        function showFavouritePetrol(data) {
+
+            $("#favourite-petrol-head").append("Вашата омилена бензинска пумпа е " + data);
+            $("#favourite-petrol-head").attr("display", data);
+            $("#favourite-petrol-head").attr('style', 'color: #505050; font-style: bold;');
+            $("#btn-favourite-petrol").show();
+
+        }
+
+        function whenUserIsLogged(id, isAdmin) {
+            var loggedAtt = "<a class='js-details btn-link' style='cursor: pointer;'>Детали</a> | "
+                + "<a class='js-favourite-petrol btn-link' style='cursor: pointer;' petrol-id='" + id + "'>Омилена бензинска</a>";
+
+            if (isAdmin)
+                loggedAtt += " | <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Избриши</a> "
+                    + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Измени</a>";
+
+            return loggedAtt;
+        }
+
+        function generateRow(name, work_time, geo_length, geo_width, types_oils, to_rate, loggedAtt) {
+
+            return "<tr> <td class='name-petrol'>" + name + "</td> <td class='work-time'>" + work_time + "</td> <td class='geo-length'> "
+                + geo_length + " </td> <td class='geo-width'> "
+                + geo_width + "</td> <td class='types_oils_final'> "
+                + types_oils + "</td> <td class='rate-petrol'> " + to_rate
+                + " </td> <td>" + loggedAtt + "</td > </tr > ";
+
+        }
+
+        function prepareView(isDetails) {
+
+            $("#title_petrol").show();
+            $("#showTables").hide();
+
+            if (isDetails) {
+                $("#edit-form").hide();
+                $("#details-form").show();
+            } else {
+                $("#details-form").hide();
+                $("#edit-form").show();
+            }
+
+        }
+
+        function showDetailsView(obj) {
+
+            var name = getName(obj);
+            var work_time = getWorkTime(obj);
+            var geo_length = getGeoLength(obj);
+            var geo_width = getGeoWidth(obj);
+            var types_oils = getTypesOfOils(obj);
+            var rating = getRating(obj);
+
+            $("#title_details_edit").text("");
+            $("#name_to_fill").append(name);
+            $("#work_time_to_fill").append(work_time);
+            $("#geo_length_to_fill").append(geo_length);
+            $("#geo_width_to_fill").append(geo_width);
+            $("#types_of_oils_to_fill").text(types_oils);
+            $("#rate_to_fill").append(rating);
+
+
+        }
+
+        function showEditView(obj) {
+
+            var id = obj.attr("edit-id");
+            var name = getName(obj);
+            var work_time = getWorkTime(obj);
+            var geo_length = getGeoLength(obj);
+            var geo_width = getGeoWidth(obj);
+            var types_oils = getTypesOfOils(obj);
+            var rating = getRating(obj);
+
+
+            $("#for_id").text(id);
+            $("#for_name").val(name);
+            $("#for_work_time").val(work_time);
+            $("#for_geo_length").val(geo_length);
+            $("#for_geo_width").val(geo_width);
+            $("#for_rating").val(rating);
+            $("#title_details_edit").text(name + " (" + geo_width + ", " + geo_length + ")");
+
+            type_oil_check(types_oils);
+        }
+
+        function getRating(obj) {
+            return obj.parents("tr").find(".rate-petrol").text();
+        }
+
+        function getTypesOfOils(obj) {
+            return obj.parents("tr").find(".types_oils_final").text();
+        }
+
+        function getWorkTime(obj) {
+            return obj.parents("tr").find(".work-time").text()
+        }
+
+        function getName(obj) {
+            return obj.parents("tr").find(".name-petrol").text()
+        }
+
+        function getGeoWidth(obj) {
+            return obj.parents("tr").find(".geo-width").text();
+        }
+
+        function getGeoLength(obj) {
+            return obj.parents("tr").find(".geo-length").text();
+        }
+
+        function returnToListOfPetrols() {
+
+            $("#title_petrol").show();
+            $("#showTables").show();
+            $("#edit-form").hide();
+            $("#details-form").hide();
+
+        }
+
+        function getCheckboxInfo() {
+            var types_oils = "";
+            if ($("#for_diesel").prop('checked') == true)
+                types_oils += "Diesel, ";
+
+            if ($("#for_biodiesel").prop('checked') == true)
+                types_oils += "Biodiesel, ";
+
+            if ($("#for_octane_95").prop('checked') == true)
+                types_oils += "Octane 95, ";
+
+            if ($("#for_octane_98").prop('checked') == true)
+                types_oils += "Octane 98, ";
+
+            if ($("#for_octane_100").prop('checked') == true)
+                types_oils += "Octane 100, ";
+
+            if ($("#for_lpg").prop('checked') == true)
+                types_oils += "LPG, ";
+
+            if (types_oils.length == 0)
+                return "Непознато";
+
+            return types_oils.substring(0, types_oils.length - 2);
+        }
+
+        function type_oil_check(types_oils) {
+
+            if (types_oils.indexOf("Diesel") != -1)
+                $("#for_diesel").prop('checked', true);
+            else $("#for_diesel").prop('checked', false);
+
+            if (types_oils.indexOf("Biodiesel") != -1)
+                $("#for_biodiesel").prop('checked', true);
+            else $("#for_biodiesel").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 95") != -1)
+                $("#for_octane_95").prop('checked', true);
+            else $("#for_octane_95").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 98") != -1)
+                $("#for_octane_98").prop('checked', true);
+            else $("#for_octane_98").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 100") != -1)
+                $("#for_octane_100").prop('checked', true);
+            else $("#for_octane_100").prop('checked', false);
+
+            if (types_oils.indexOf("LPG") != -1)
+                $("#for_lpg").prop('checked', true);
+            else $("#for_lpg").prop('checked', false);
+        }
+
+        function emptyValidation() {
+
+            $("#name_for_required").hide();
+            $("#work_for_required").hide();
+            $("#geo_length_for_required").hide();
+            $("#geo_width_for_required").hide();
+            $("#rating_for_required").hide();
+            $("#rating_for_number").hide();
+
+        }
+
+        function validate() {
+            var name = $("#for_name").val();
+            var work = $("#for_work_time").val();
+            var geo_length = $("#for_geo_length").val();
+            var geo_width = $("#for_geo_width").val();
+            var rating = $("#for_rating").val();
+
+
+            var ifReturn = true;
+
+            if (name.trim() === "" || name.length == 0) {
+                ifReturn = false;
+                $("#name_for_required").show();
+            }
+
+            if (work.trim() === "" || work.length == 0) {
+                ifReturn = false;
+                $("#work_for_required").show();
+            }
+
+            if (geo_length.trim() === "" || geo_length.length == 0) {
+                ifReturn = false;
+                $("#geo_length_for_required").show();
+            }
+
+            if (geo_width.trim() === "" || geo_width.length == 0) {
+                ifReturn = false;
+                $("#geo_width_for_required").show();
+            }
+
+            if (rating.trim() === "" || rating.length == 0) {
+                ifReturn = false;
+                $("#rating_for_required").show();
+            }
+
+            if (parseInt(rating) < 1 &&
+                parseInt(rating) > 5) {
+                ifReturn = false;
+                $("#rating_for_number").show();
+            }
+
+            return ifReturn;
+        }
+
+        function prepareForCreation() {
+
+            $("#for_name").val("");
+            $("#for_work_time").val("");
+            $("#for_geo_length").val("");
+            $("#for_geo_width").val("");
+            $("#for_rating").val("");
+
+            $("#for_diesel").prop('checked', false);
+            $("#for_biodiesel").prop('checked', false);
+            $("#for_octane_95").prop('checked', false);
+            $("#for_octane_98").prop('checked', false);
+            $("#for_octane_100").prop('checked', false);
+            $("#for_lpg").prop('checked', false);
+
+        }
+
+        function getFullName() {
+
+            var name = $("#for_name").val().split(" ");
+            var fullName = "";
+            for (var i = 0; i < name.length; i++) {
+                if (i == 0)
+                    fullName += name[i];
+                else
+                    fullName += "+" + name[i];
+            }
+
+            if (fullName.charAt(fullName.length - 1) == '+')
+                fullName = fullName.substr(0, fullName.length);
+
+            return fullName;
+        }
+
+        function generateURL(method, rating, fullName, types_oils) {
+
+            if (method == "PUT") {
+                return "/api/PetrolStations?PetrolStationId=" + $("#for_id").text() + "&ImeNaBenzinska=" + fullName.trim()
+                    + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                    + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating;
+            } else {
+                return "/api/PetrolStations?ImeNaBenzinska=" + fullName.trim()
+                    + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                    + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating;
+            }
+
+        }
+
+
+        function generateAjax(method, rating, fullName, types_oils) {
+            $.ajax({
+                method: method,
+                url: generateURL(method, rating, fullName, types_oils),
+                success: function () {
+                    location.replace("/PetrolStations/Index");
+                }
+            })
+        }
+
+        function checkRatingValidity() {
+
+            var r = parseInt($("#for_rating").val().trim()) != NaN ? $("#for_rating").val().trim() : "Not Rated";
+            if (parseInt(r) > 5 || parseInt(r) < 0)
+                r = 0;
+            return r;
+
+        }
+
+        $(document).ready(function () {
 
             var isLogged = false;
             var isAdmin = false;
             var createOrEdit = false;
-            var table = $("petrolsTable");
 
-            var url = "/PetrolStations/GetUserLogged";
-            var urlSecond = "/PetrolStations/GetIfAdmin";
-            var urlThird = "/PetrolStations/GetFavouritePetrol";
+            var checkIfUserLoggedURL = "/PetrolStations/GetUserLogged";
+            var checkIfUserIsAdminURL = "/PetrolStations/GetIfAdmin";
+            var getFavouritePetrol = "/PetrolStations/GetFavouritePetrol";
 
-            $.get(url, function (data) {
+
+            hideExtras();
+            appendTexts();
+
+            $.get(checkIfUserLoggedURL, function (data) {
                 if (data)
                     isLogged = true;
             });
 
-            $.get(urlSecond, function (data) {
+            $.get(checkIfUserIsAdminURL, function (data) {
                 if (data)
                     isAdmin = true;
             });
 
-            $.post(urlThird, function (data) {
-                if (data.indexOf("Not chosen") != -1) {
-                    $("#favourite-petrol-head").append("Немате изберено омилена бензинска пумпа");
-                    $("#favourite-petrol-head").attr('style', 'color: gray; font-style: italic;');
-                    $("#btn-favourite-petrol").hide();
-                } else if (data.indexOf("Not logged") != -1) {
-                    $("#favourite-petrol-head").append("Најавете се за да ја добиете функционалноста за избирање на омилена бензинска");
-                    $("#favourite-petrol-head").attr('style', 'color: red;');
-                    $("#favourite-petrol-head").attr('style', 'color: red; font-style: italic;');
-                    $("#btn-favourite-petrol").hide();
-                } else {
-                    $("#favourite-petrol-head").append("Вашата омилена бензинска пумпа е " + data);
-                    $("#favourite-petrol-head").attr("display", data);
-                    $("#favourite-petrol-head").attr('style', 'color: #505050; font-style: bold;');
-                    $("#btn-favourite-petrol").show();
-                }
+            
+
+            $.post(getFavouritePetrol, function (data) {
+
+                if (data.indexOf("Not chosen") != -1) 
+                    favouritePetrolNotChosen();
+
+                else if (data.indexOf("Not logged") != -1) 
+                    userIsNotLogged();
+
+                else 
+                    showFavouritePetrol(data);
+
             });
 
             $.ajax({
@@ -236,6 +559,7 @@
                 success: function (data) {
 
                     $(data).find('ArrayOfPetrolStation PetrolStation').each(function () {
+
                         var name = $(this).find('ImeNaBenzinska').text();
                         var geo_length = $(this).find('Dolzhina').text();
                         var geo_width = $(this).find('GeografskaShirochina').text();
@@ -243,27 +567,15 @@
                         var work_time = $(this).find('RabotnoVreme').text();
                         var types_oils = $(this).find('TipoviGorivo').text();
                         var id = $(this).find('PetrolStationId').text();
-
                         var to_rate = "Неоценета";
-
-                        if (rating > 0)
-                            to_rate = rating + "";
-
                         var loggedAtt = "";
 
-                        if (isLogged == true) {
-                            loggedAtt += "<a class='js-details btn-link' style='cursor: pointer;'>Details</a> | "
-                                + "<a class='js-favourite-petrol btn-link' style='cursor: pointer;' petrol-id='"+ id +"'>Favoruite petrol</a>";
-                            if (isAdmin)
-                                loggedAtt += " | <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Delete</a> "
-                                    + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Edit</a>";
-                        }
+                        to_rate = rating > 0 ? rating + "" : to_rate;
 
-                        var row = "<tr> <td class='name-petrol'>" + name + "</td> <td class='work-time'>" + work_time + "</td> <td class='geo-length'> "
-                            + geo_length + " </td> <td class='geo-width'> "
-                            + geo_width + "</td> <td class='types_oils_final'> "
-                            + types_oils + "</td> <td class='rate-petrol'> " + to_rate
-                            + " </td> <td>" + loggedAtt + "</td > </tr > ";
+                        loggedAtt += isLogged == true ? whenUserIsLogged(id, isAdmin) : loggedAtt;
+
+
+                        var row = generateRow(name, work_time, geo_length, geo_width, types_oils, to_rate, loggedAtt);
 
                         $("#table_body").append(row);
 
@@ -282,294 +594,88 @@
 
         $("#petrolsTable").on('draw.dt', function () {
             $("#petrolsTable .js-delete").click(function () {
+
                 button = $(this);
                 bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
                     function (result) {
+
                         if (result) {
+
                             $.ajax({
                                 method: "DELETE",
                                 url: "/api/PetrolStations?PetrolStationId=" + button.attr("delete-id"),
                                 success: function () {
-                                    button.parents("tr").remove().draw();
+
+                                    button.parents("tr").remove();
+
                                 }
                             })
+
                         }
+
                     })
             })
 
             $("#petrolsTable .js-details").click(function () {
 
-                $("#title_petrol").show();
-                $("#showTables").hide();
-                $("#edit-form").hide();
-                $("#details-form").show();
+                prepareView(true);
+                showDetailsView($(this));
 
-                var name = $(this).parents("tr").find(".name-petrol").text();
-                var work_time = $(this).parents("tr").find(".work-time").text();
-                var geo_length = $(this).parents("tr").find(".geo-length").text();
-                var geo_width = $(this).parents("tr").find(".geo-width").text();
-                var types_oils = $(this).parents("tr").find(".types_oils_final").text();
-                var rating = $(this).parents("tr").find(".rate-petrol").text();
+                $("#title_details_edit").text(getName($(this)) + " (" + getGeoWidth($(this)) + ", " + getGeoLength($(this)) + ")");
 
-                $("#name_to_fill").text("");
-                $("#work_time_to_fill").text("");
-                $("#geo_length_to_fill").text("");
-                $("#geo_width_to_fill").text("");
-                $("#types_of_oils_to_fill").text("");
-                $("#rate_to_fill").text("");
-                $("#title_details_edit").text("");
+            })
 
-                $("#name_to_fill").append(name);
-                $("#work_time_to_fill").append(work_time);
-                $("#geo_length_to_fill").append(geo_length);
-                $("#geo_width_to_fill").append(geo_width);
-                $("#types_of_oils_to_fill").text(types_oils);
-                $("#rate_to_fill").append(rating);
+            $(".details-close").click(function () {
 
-                $("#title_details_edit").text(name + " (" + geo_width + ", " + geo_length + ")");
+                returnToListOfPetrols();
 
-            }) // OK
-
-            $("#details-close").click(function () {
-
-                $("#title_petrol").show();
-                $("#showTables").show();
-                $("#edit-form").hide();
-                $("#details-form").hide();
-
-            }) // OK
-
-            function getCheckboxInfo() {
-                var types_oils = "";
-                if ($("#for_diesel").prop('checked') == true)
-                    types_oils += "Diesel, ";
-
-                if ($("#for_biodiesel").prop('checked') == true)
-                    types_oils += "Biodiesel, ";
-
-                if ($("#for_octane_95").prop('checked') == true)
-                    types_oils += "Octane 95, ";
-
-                if ($("#for_octane_98").prop('checked') == true)
-                    types_oils += "Octane 98, ";
-
-                if ($("#for_octane_100").prop('checked') == true)
-                    types_oils += "Octane 100, ";
-
-                if ($("#for_lpg").prop('checked') == true)
-                    types_oils += "LPG, ";
-
-                if (types_oils.length == 0)
-                    return "Непознато";
-
-                return types_oils.substring(0, types_oils.length - 2);
-            } // OK
-
-            function type_oil_check(types_oils) {
-
-                if (types_oils.indexOf("Diesel") != -1)
-                    $("#for_diesel").prop('checked', true);
-                else $("#for_diesel").prop('checked', false);
-
-                if (types_oils.indexOf("Biodiesel") != -1)
-                    $("#for_biodiesel").prop('checked', true);
-                else $("#for_biodiesel").prop('checked', false);
-
-                if (types_oils.indexOf("Octane 95") != -1)
-                    $("#for_octane_95").prop('checked', true);
-                else $("#for_octane_95").prop('checked', false);
-
-                if (types_oils.indexOf("Octane 98") != -1)
-                    $("#for_octane_98").prop('checked', true);
-                else $("#for_octane_98").prop('checked', false);
-
-                if (types_oils.indexOf("Octane 100") != -1)
-                    $("#for_octane_100").prop('checked', true);
-                else $("#for_octane_100").prop('checked', false);
-
-                if (types_oils.indexOf("LPG") != -1)
-                    $("#for_lpg").prop('checked', true);
-                else $("#for_lpg").prop('checked', false);
-            } // OK
-
-            function emptyValidation() {
-                $("#name_for_required").hide();
-                $("#work_for_required").hide();
-                $("#geo_length_for_required").hide();
-                $("#geo_width_for_required").hide();
-                $("#rating_for_required").hide();
-                $("#rating_for_number").hide();
-            } // OK
-
-            function validate() {
-                var name = $("#for_name").val();
-                var work = $("#for_work_time").val();
-                var geo_length = $("#for_geo_length").val();
-                var geo_width = $("#for_geo_width").val();
-                var rating = $("#for_rating").val();
-
-                var ifReturn = true;
-                console.log(name + " " + work);
-
-                if (name.trim() === "" || name.length == 0) {
-                    ifReturn = false;
-                    $("#name_for_required").show();
-                }
-
-                if (work.trim() === "" || work.length == 0) {
-                    ifReturn = false;
-                    $("#work_for_required").show();
-                }
-
-                if (geo_length.trim() === "" || geo_length.length == 0) {
-                    ifReturn = false;
-                    $("#geo_length_for_required").show();
-                }
-
-                if (geo_width.trim() === "" || geo_width.length == 0) {
-                    ifReturn = false;
-                    $("#geo_width_for_required").show();
-                }
-
-                if (rating.trim() === "" || rating.length == 0) {
-                    ifReturn = false;
-                    $("#rating_for_required").show();
-                }
-
-                if (parseInt(rating) < 1 &&
-                    parseInt(rating) > 5) {
-                    ifReturn = false;
-                    $("#rating_for_number").show();
-                }
-
-                return ifReturn;
-            } // OK
+            }) 
 
             $("#petrolsTable .js-edit").click(function () {
 
                 emptyValidation();
+                prepareView(false);
+                
 
-                $("#title_petrol").show();
-                $("#showTables").hide();
-                $("#details-form").hide();
-                $("#edit-form").show();
-
-                var id = $(this).attr("edit-id");
-                var name = $(this).parents("tr").find(".name-petrol").text();
-                var work_time = $(this).parents("tr").find(".work-time").text();
-                var geo_length = $(this).parents("tr").find(".geo-length").text();
-                var geo_width = $(this).parents("tr").find(".geo-width").text();
-                var types_oils = $(this).parents("tr").find(".types_oils_final").text();
-                var rating = $(this).parents("tr").find(".rate-petrol").text();
-                $("#title_details_edit").text("");
-
-                $("#for_id").text("");
-
-                $("#for_id").text(id);
-                $("#for_name").val(name);
-                $("#for_work_time").val(work_time);
-                $("#for_geo_length").val(geo_length);
-                $("#for_geo_width").val(geo_width);
-                $("#for_rating").val(rating);
-                $("#title_details_edit").text(name + " (" + geo_width + ", " + geo_length + ")");
-
-                type_oil_check(types_oils);
+                showEditView($(this));
 
                 createOrEdit = false;
 
-            }) // OK
+            })
 
             $("#btn-create").click(function () {
 
                 emptyValidation();
-
-                $("#title_petrol").show();
-                $("#showTables").hide();
-                $("#details-form").hide();
-                $("#edit-form").show();
-
+                prepareView(false);
                 createOrEdit = true;
+                prepareForCreation();
 
-                $("#for_name").val("");
-                $("#for_work_time").val("");
-                $("#for_geo_length").val("");
-                $("#for_geo_width").val("");
-                $("#for_rating").val("");
-
-                $("#for_diesel").prop('checked', false);
-                $("#for_biodiesel").prop('checked', false);
-                $("#for_octane_95").prop('checked', false);
-                $("#for_octane_98").prop('checked', false);
-                $("#for_octane_100").prop('checked', false);
-                $("#for_lpg").prop('checked', false);
-
-            }) // OK
+            })
 
             $("#edit-close").click(function () {
                 emptyValidation();
+
                 if (validate()) {
+
+                    var rating = checkRatingValidity();
+                   
+                    var fullName = getFullName();
+                    var types_oils = getCheckboxInfo();
+
                     if (createOrEdit) {
-                        var rating = $("#for_rating").val();
-                        if (isNaN(rating))
-                            rating = 0;
 
-                        var name = $("#for_name").val().split(" ");
-                        var fullName = "";
-                        for (var i = 0; i < name.length; i++) {
-                            if (i == 0)
-                                fullName += name[i];
-                            else
-                                fullName += "+" + name[i];
-                        }
+                        generateAjax("POST", rating, fullName, types_oils);
 
-                        if (fullName.charAt(fullName.length - 1) == '+')
-                            fullName = fullName.substr(0, fullName.length);
-
-                        var types_oils = getCheckboxInfo();
-
-                        $.ajax({
-                            method: "POST",
-                            url: "/api/PetrolStations?ImeNaBenzinska=" + fullName.trim()
-                                + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
-                                + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating,
-                            success: function () {
-                                location.replace("/PetrolStations/Index");
-                            }
-                        })
                     } else {
-                        var rating = $("#for_rating").val().trim();
-                        if (rating == 'Неоценета')
-                            rating = 0;
 
-                        var name = $("#for_name").val().split(" ");
-                        var fullName = "";
-                        for (var i = 0; i < name.length; i++) {
-                            if (i == 0)
-                                fullName += name[i];
-                            else
-                                fullName += "+" + name[i];
-                        }
-
-                        if (fullName.charAt(fullName.length - 1) == '+')
-                            fullName = fullName.substr(0, fullName.length - 1);
-
-                        var types_oils = getCheckboxInfo();
-
-                        $.ajax({
-                            method: "PUT",
-                            url: "/api/PetrolStations?PetrolStationId=" + $("#for_id").text() + "&ImeNaBenzinska=" + fullName.trim()
-                                + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
-                                + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating,
-                            success: function () {
-                                location.replace("/PetrolStations/Index");
-                            }
-                        })
+                        generateAjax("PUT", rating, fullName, types_oils);
                     }
                 }
-            }) // OK
+            }) 
 
             $("#petrolsTable .js-favourite-petrol").click(function () {
                 var id = $(this).attr('petrol-id');
+
                 bootbox.confirm("Дали сте сигурни дека сакате да ја изберете оваа бензинска како ваша омилена?",
                     function (result) {
                         if (result) {
@@ -577,6 +683,7 @@
                                 method: "POST",
                                 url: "/PetrolStations/AddFavouritePetrol?PetrolStationId=" + id,
                                 success: function (data) {
+
                                     var display = $("#favourite-petrol-head").attr('display');
                                     if (data.indexOf("Already has!") != -1) {
                                         alert("Веќе имате изберено омилена бензинска пумпа. Доколку сакате да ја промените прво избришете ја моменталната, " +
@@ -584,14 +691,17 @@
                                     } else {
                                         location.reload("/PetrolStations/Index");
                                     }
+
                                 }
                             })
                         }
                     })
-            }) // OK
+            }) 
 
             $("#btn-favourite-petrol").click(function () {
+
                 var display = $(this).parents("#fav-petrol-block").find("#favourite-petrol-head").attr('display');
+
                 bootbox.confirm("Дали сте сигурни дека веќе не сакате бензинската пумпа " +
                     display + " да ви биде омилена?",
                     function (result) {
@@ -608,7 +718,7 @@
                             })
                         }
                     })
-            }) // OK
+            })
         })
     </script>
 }
