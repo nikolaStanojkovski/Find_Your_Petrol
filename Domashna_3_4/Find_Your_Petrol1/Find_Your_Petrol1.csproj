@@ -411,6 +411,7 @@
     <None Include="Properties\PublishProfiles\findourpetrol - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\findourpetrol - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FindYourPetrol - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\findyourpetrolcloud - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />

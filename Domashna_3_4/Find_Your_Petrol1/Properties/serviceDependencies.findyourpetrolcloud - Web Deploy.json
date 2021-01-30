@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/findyourpetrolservercloud/databases/aspnet-Find_Your_Petrol1-20201205072955",
+      "type": "mssql.azure",
+      "connectionId": "DefaultConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

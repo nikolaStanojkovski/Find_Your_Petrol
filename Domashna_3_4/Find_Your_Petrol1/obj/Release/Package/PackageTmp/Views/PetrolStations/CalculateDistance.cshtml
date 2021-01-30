@@ -15,7 +15,7 @@
         <br />
         <h3>Изберете ја првата бензинска пумпа:</h3>
         @Html.DropDownListFor(m => m.FromId,
-        new SelectList(Model.petrols, "PetrolStationId", "ImeNaBenzinska"),
+        new SelectList(Model.petrols, "PetrolStationId", "Prikaz"),
         new { @class = "form-control" })
         <br />
     </div>
@@ -24,7 +24,7 @@
 
         <h3>Изберете ја втората бензинска пумпа:</h3>
         @Html.DropDownListFor(m => m.ToId,
-        new SelectList(Model.petrols, "PetrolStationId", "ImeNaBenzinska"),
+        new SelectList(Model.petrols, "PetrolStationId", "Prikaz"),
         new { @class = "form-control" })
 
     </div>
@@ -37,7 +37,7 @@
 </div>
     
 }
-
+<br />
 <div>
     <div>
         <div class="col-md-3">

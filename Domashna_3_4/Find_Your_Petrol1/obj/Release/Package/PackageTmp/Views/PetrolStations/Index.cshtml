@@ -1,98 +1,724 @@
-﻿@model IEnumerable<Find_Your_Petrol1.Models.PetrolStation>
+﻿<h2 id="headTitle"></h2>
+<hr />
 
-@{
-    ViewBag.Title = "Бензински";
-}
+<div id="fav-petrol-block">
+    <h3 id="favourite-petrol-head" display=""></h3> <br />
+    <a id="btn-favourite-petrol" class="btn btn-block" style="background-color: grey; color:white;">Remove favourite petrol</a>
+</div> <br />
 
-<h2>Сите бензински пумпи во Република Северна Македонија</h2>
+<div id="showTables">
 
-<div class="row">
-    <div class="col-md-6">
-        <p>
-            @if (User.IsInRole("Administrator"))
-            {
-                @Html.ActionLink("Креирај нова бензинска", "Create")
-            }
-        </p>
-    </div>
+    <a id="btn-create" class="btn btn-block" style="background-color: forestgreen; color:white;">Add Petrol</a>
+    <hr />
+    <p style="font-style: italic; color: gray;">* За да ги сортирате редиците по било кој атрибут, кликнете на соодветната колона, по опаѓачки или растечки редослед</p>
+    <p style="font-style: italic; color: gray;">** За да ги филтрирате редиците по било кој атрибут, внесете дел од текстот на атрибутот од било која колона</p>
+    <br />
+    <table class="table" id="petrolsTable">
+        <thead>
+            <tr>
+                <th id="head_name">
+
+                </th>
+                <th id="head_work_time">
+
+                </th>
+                <th id="head_geo_length">
+
+                </th>
+                <th id="head_geo_width">
+
+                </th>
+                <th id="head_types_of_oils">
+
+                </th>
+                <th id="head_rating">
+
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="table_body">
+        </tbody>
+    </table>
 </div>
 
+<div id="title_petrol">
+    <br />
+    <hr />
+    <h4 id="title_details_edit"></h4>
+    <hr />
+    <div id="details-form">
 
-<table class="table" id="petrolsTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ImeNaBenzinska)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RabotnoVreme)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dolzhina)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GeografskaShirochina)
-            </th>
+        <dl class="dl-horizontal">
+            <dt>
+                Име
+            </dt>
 
+            <dd id="name_to_fill">
 
-            @if (ViewBag.isLogged)
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Ocena)
-                </th>
-            }
+            </dd>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImeNaBenzinska)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RabotnoVreme)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dolzhina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GeografskaShirochina)
-            </td>
-            @if (ViewBag.isLogged)
-            {
-                <td>
-                    @if (item.Ocena == 0)
-                    {
-                        <p>Not rated</p>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.Ocena)
-                    }
-                </td>
-            }
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Измени", "Edit", new { id = item.PetrolStationId }) <p style="display:inline-block">|</p>
-                    @Html.ActionLink("Избриши", "Delete", new { id = item.PetrolStationId })
-                }
-                |
-                @Html.ActionLink("Детали", "Details", new { id = item.PetrolStationId })
+            <dt>
+                Работно време
+            </dt>
 
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+            <dd id="work_time_to_fill">
+
+            </dd>
+
+            <dt>
+                Географска должина
+            </dt>
+
+            <dd id="geo_length_to_fill">
+
+            </dd>
+
+            <dt>
+                Географска широчина
+            </dt>
+
+            <dd id="geo_width_to_fill">
+
+            </dd>
+
+            <dt>
+                Видови на гориво
+            </dt>
+
+            <dd id="types_of_oils_to_fill">
+
+            </dd>
+
+            <dt>
+                Оценка
+            </dt>
+
+            <dd id="rate_to_fill">
+
+            </dd>
+        </dl>
+        <hr />
+        <br />
+        <a style="cursor: pointer;" class="btn btn-default details-close">Назад кон листата</a>
+    </div>
+    <div id="edit-form">
+
+        <div id="for_id" hidden="hidden"></div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Име</label>
+            <div class="col-md-10">
+                <input id="for_name" class="form-control" />
+                <p class="text-danger" id="name_for_required">Name field is required</p>
+            </div>
+        </div>
+
+        <br /> <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Работно време</label>
+            <div class="col-md-10">
+                <input id="for_work_time" class="form-control" />
+                <p class="text-danger" id="work_for_required">Work time field is required</p>
+            </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Географска должина</label>
+            <div class="col-md-10">
+                <input id="for_geo_length" class="form-control" />
+                <p class="text-danger" id="geo_length_for_required">Geographical length field is required</p>
+            </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Географска широчина</label>
+            <div class="col-md-10">
+                <input id="for_geo_width" class="form-control" />
+                <p class="text-danger" id="geo_width_for_required">Geographical width field is required</p>
+            </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Видови на гориво</label>
+            <div class="col-md-10">
+                <input type="checkbox" style="float: left;" id="for_diesel" class="checkbox" /> <span style="padding-left: 10px;"> Diesel</span> <br />
+                <input type="checkbox" style="float: left;" id="for_biodiesel" class="checkbox" /> <span style="padding-left: 10px;"> Biodiesel</span> <br />
+                <input type="checkbox" style="float: left;" id="for_octane_95" class="checkbox" /> <span style="padding-left: 10px;"> Octane 95</span> <br />
+                <input type="checkbox" style="float: left;" id="for_octane_98" class="checkbox" /> <span style="padding-left: 10px;"> Octane 98</span> <br />
+                <input type="checkbox" style="float: left;" id="for_octane_100" class="checkbox" /> <span style="padding-left: 10px;"> Octane 100</span> <br />
+                <input type="checkbox" style="float: left;" id="for_lpg" class="checkbox" /> <span style="padding-left: 10px;"> LPG</span> <br /> <br />
+            </div>
+        </div>
+
+        <br /> <br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Оценка</label>
+            <div class="col-md-10">
+                <input id="for_rating" class="form-control" />
+                <p class="text-danger" id="rating_for_required">Rating field is required</p>
+                <p class="text-danger" id="rating_for_number">Rating must be a number between 1 and 5</p>
+            </div>
+        </div>
+
+        <br /> <br /> <br /> <br /> <br /> <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="edit-close" value="Зачувај" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a  style="cursor: pointer;" class="btn btn-default details-close">Назад кон листата</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
 
     <script>
-        $("#petrolsTable").DataTable();
-    </script>    
-    
+
+        function hideExtras() {
+            $("#btn-create").hide();
+            $("#title_petrol").hide();
+            $("#edit-form").hide();
+            $("#details-form").hide();
+        }
+
+        function appendTexts() {
+
+            $("#head_name").append("Име");
+            $("#head_work_time").append("Работно време");
+            $("#head_geo_length").append("Географска должина");
+            $("#head_geo_width").append("Географска широчина");
+            $("#head_types_of_oils").append("Видови на гориво");
+            $("#head_rating").append("Оценка");
+
+            $("#headTitle").append("Листа на бензински пумпи во Република Северна Македонија");
+        }
+
+        function favouritePetrolNotChosen() {
+
+            $("#favourite-petrol-head").append("Немате изберено омилена бензинска пумпа");
+            $("#favourite-petrol-head").attr('style', 'color: gray; font-style: italic;');
+            $("#btn-favourite-petrol").hide();
+
+        }
+
+        function userIsNotLogged() {
+
+            $("#favourite-petrol-head").append("Најавете се за да ја добиете функционалноста за избирање на омилена бензинска");
+            $("#favourite-petrol-head").attr('style', 'color: red;');
+            $("#favourite-petrol-head").attr('style', 'color: red; font-style: italic;');
+            $("#btn-favourite-petrol").hide();
+
+        }
+
+        function showFavouritePetrol(data) {
+
+            $("#favourite-petrol-head").append("Вашата омилена бензинска пумпа е " + data);
+            $("#favourite-petrol-head").attr("display", data);
+            $("#favourite-petrol-head").attr('style', 'color: #505050; font-style: bold;');
+            $("#btn-favourite-petrol").show();
+
+        }
+
+        function whenUserIsLogged(id, isAdmin) {
+            var loggedAtt = "<a class='js-details btn-link' style='cursor: pointer;'>Детали</a> | "
+                + "<a class='js-favourite-petrol btn-link' style='cursor: pointer;' petrol-id='" + id + "'>Омилена бензинска</a>";
+
+            if (isAdmin)
+                loggedAtt += " | <a class='js-delete btn-link' style='cursor: pointer;' delete-id='" + id + "'>Избриши</a> "
+                    + "| <a class='js-edit btn-link' style='cursor: pointer;' edit-id='" + id + "'>Измени</a>";
+
+            return loggedAtt;
+        }
+
+        function generateRow(name, work_time, geo_length, geo_width, types_oils, to_rate, loggedAtt) {
+
+            return "<tr> <td class='name-petrol'>" + name + "</td> <td class='work-time'>" + work_time + "</td> <td class='geo-length'> "
+                + geo_length + " </td> <td class='geo-width'> "
+                + geo_width + "</td> <td class='types_oils_final'> "
+                + types_oils + "</td> <td class='rate-petrol'> " + to_rate
+                + " </td> <td>" + loggedAtt + "</td > </tr > ";
+
+        }
+
+        function prepareView(isDetails) {
+
+            $("#title_petrol").show();
+            $("#showTables").hide();
+
+            if (isDetails) {
+                $("#edit-form").hide();
+                $("#details-form").show();
+            } else {
+                $("#details-form").hide();
+                $("#edit-form").show();
+            }
+
+        }
+
+        function showDetailsView(obj) {
+
+            var name = getName(obj);
+            var work_time = getWorkTime(obj);
+            var geo_length = getGeoLength(obj);
+            var geo_width = getGeoWidth(obj);
+            var types_oils = getTypesOfOils(obj);
+            var rating = getRating(obj);
+
+            $("#title_details_edit").text("");
+            $("#name_to_fill").append(name);
+            $("#work_time_to_fill").append(work_time);
+            $("#geo_length_to_fill").append(geo_length);
+            $("#geo_width_to_fill").append(geo_width);
+            $("#types_of_oils_to_fill").text(types_oils);
+            $("#rate_to_fill").append(rating);
+
+
+        }
+
+        function showEditView(obj) {
+
+            var id = obj.attr("edit-id");
+            var name = getName(obj);
+            var work_time = getWorkTime(obj);
+            var geo_length = getGeoLength(obj);
+            var geo_width = getGeoWidth(obj);
+            var types_oils = getTypesOfOils(obj);
+            var rating = getRating(obj);
+
+
+            $("#for_id").text(id);
+            $("#for_name").val(name);
+            $("#for_work_time").val(work_time);
+            $("#for_geo_length").val(geo_length);
+            $("#for_geo_width").val(geo_width);
+            $("#for_rating").val(rating);
+            $("#title_details_edit").text(name + " (" + geo_width + ", " + geo_length + ")");
+
+            type_oil_check(types_oils);
+        }
+
+        function getRating(obj) {
+            return obj.parents("tr").find(".rate-petrol").text();
+        }
+
+        function getTypesOfOils(obj) {
+            return obj.parents("tr").find(".types_oils_final").text();
+        }
+
+        function getWorkTime(obj) {
+            return obj.parents("tr").find(".work-time").text()
+        }
+
+        function getName(obj) {
+            return obj.parents("tr").find(".name-petrol").text()
+        }
+
+        function getGeoWidth(obj) {
+            return obj.parents("tr").find(".geo-width").text();
+        }
+
+        function getGeoLength(obj) {
+            return obj.parents("tr").find(".geo-length").text();
+        }
+
+        function returnToListOfPetrols() {
+
+            $("#title_petrol").show();
+            $("#showTables").show();
+            $("#edit-form").hide();
+            $("#details-form").hide();
+
+        }
+
+        function getCheckboxInfo() {
+            var types_oils = "";
+            if ($("#for_diesel").prop('checked') == true)
+                types_oils += "Diesel, ";
+
+            if ($("#for_biodiesel").prop('checked') == true)
+                types_oils += "Biodiesel, ";
+
+            if ($("#for_octane_95").prop('checked') == true)
+                types_oils += "Octane 95, ";
+
+            if ($("#for_octane_98").prop('checked') == true)
+                types_oils += "Octane 98, ";
+
+            if ($("#for_octane_100").prop('checked') == true)
+                types_oils += "Octane 100, ";
+
+            if ($("#for_lpg").prop('checked') == true)
+                types_oils += "LPG, ";
+
+            if (types_oils.length == 0)
+                return "Непознато";
+
+            return types_oils.substring(0, types_oils.length - 2);
+        }
+
+        function type_oil_check(types_oils) {
+
+            if (types_oils.indexOf("Diesel") != -1)
+                $("#for_diesel").prop('checked', true);
+            else $("#for_diesel").prop('checked', false);
+
+            if (types_oils.indexOf("Biodiesel") != -1)
+                $("#for_biodiesel").prop('checked', true);
+            else $("#for_biodiesel").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 95") != -1)
+                $("#for_octane_95").prop('checked', true);
+            else $("#for_octane_95").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 98") != -1)
+                $("#for_octane_98").prop('checked', true);
+            else $("#for_octane_98").prop('checked', false);
+
+            if (types_oils.indexOf("Octane 100") != -1)
+                $("#for_octane_100").prop('checked', true);
+            else $("#for_octane_100").prop('checked', false);
+
+            if (types_oils.indexOf("LPG") != -1)
+                $("#for_lpg").prop('checked', true);
+            else $("#for_lpg").prop('checked', false);
+        }
+
+        function emptyValidation() {
+
+            $("#name_for_required").hide();
+            $("#work_for_required").hide();
+            $("#geo_length_for_required").hide();
+            $("#geo_width_for_required").hide();
+            $("#rating_for_required").hide();
+            $("#rating_for_number").hide();
+
+        }
+
+        function validate() {
+            var name = $("#for_name").val();
+            var work = $("#for_work_time").val();
+            var geo_length = $("#for_geo_length").val();
+            var geo_width = $("#for_geo_width").val();
+            var rating = $("#for_rating").val();
+
+
+            var ifReturn = true;
+
+            if (name.trim() === "" || name.length == 0) {
+                ifReturn = false;
+                $("#name_for_required").show();
+            }
+
+            if (work.trim() === "" || work.length == 0) {
+                ifReturn = false;
+                $("#work_for_required").show();
+            }
+
+            if (geo_length.trim() === "" || geo_length.length == 0) {
+                ifReturn = false;
+                $("#geo_length_for_required").show();
+            }
+
+            if (geo_width.trim() === "" || geo_width.length == 0) {
+                ifReturn = false;
+                $("#geo_width_for_required").show();
+            }
+
+            if (rating.trim() === "" || rating.length == 0) {
+                ifReturn = false;
+                $("#rating_for_required").show();
+            }
+
+            if (parseInt(rating) < 1 &&
+                parseInt(rating) > 5) {
+                ifReturn = false;
+                $("#rating_for_number").show();
+            }
+
+            return ifReturn;
+        }
+
+        function prepareForCreation() {
+
+            $("#for_name").val("");
+            $("#for_work_time").val("");
+            $("#for_geo_length").val("");
+            $("#for_geo_width").val("");
+            $("#for_rating").val("");
+
+            $("#for_diesel").prop('checked', false);
+            $("#for_biodiesel").prop('checked', false);
+            $("#for_octane_95").prop('checked', false);
+            $("#for_octane_98").prop('checked', false);
+            $("#for_octane_100").prop('checked', false);
+            $("#for_lpg").prop('checked', false);
+
+        }
+
+        function getFullName() {
+
+            var name = $("#for_name").val().split(" ");
+            var fullName = "";
+            for (var i = 0; i < name.length; i++) {
+                if (i == 0)
+                    fullName += name[i];
+                else
+                    fullName += "+" + name[i];
+            }
+
+            if (fullName.charAt(fullName.length - 1) == '+')
+                fullName = fullName.substr(0, fullName.length);
+
+            return fullName;
+        }
+
+        function generateURL(method, rating, fullName, types_oils) {
+
+            if (method == "PUT") {
+                return "/api/PetrolStations?PetrolStationId=" + $("#for_id").text() + "&ImeNaBenzinska=" + fullName.trim()
+                    + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                    + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating;
+            } else {
+                return "/api/PetrolStations?ImeNaBenzinska=" + fullName.trim()
+                    + "&RabotnoVreme=" + $("#for_work_time").val().trim() + "&Dolzhina=" + $("#for_geo_length").val().trim()
+                    + "&GeografskaShirochina=" + $("#for_geo_width").val().trim() + "&TipoviGorivo=" + types_oils.trim() + "&Ocena=" + rating;
+            }
+
+        }
+
+
+        function generateAjax(method, rating, fullName, types_oils) {
+            $.ajax({
+                method: method,
+                url: generateURL(method, rating, fullName, types_oils),
+                success: function () {
+                    location.replace("/PetrolStations/Index");
+                }
+            })
+        }
+
+        function checkRatingValidity() {
+
+            var r = parseInt($("#for_rating").val().trim()) != NaN ? $("#for_rating").val().trim() : "Not Rated";
+            if (parseInt(r) > 5 || parseInt(r) < 0)
+                r = 0;
+            return r;
+
+        }
+
+        $(document).ready(function () {
+
+            var isLogged = false;
+            var isAdmin = false;
+            var createOrEdit = false;
+
+            var checkIfUserLoggedURL = "/PetrolStations/GetUserLogged";
+            var checkIfUserIsAdminURL = "/PetrolStations/GetIfAdmin";
+            var getFavouritePetrol = "/PetrolStations/GetFavouritePetrol";
+
+
+            hideExtras();
+            appendTexts();
+
+            $.get(checkIfUserLoggedURL, function (data) {
+                if (data)
+                    isLogged = true;
+            });
+
+            $.get(checkIfUserIsAdminURL, function (data) {
+                if (data)
+                    isAdmin = true;
+            });
+
+            
+
+            $.post(getFavouritePetrol, function (data) {
+
+                if (data.indexOf("Not chosen") != -1) 
+                    favouritePetrolNotChosen();
+
+                else if (data.indexOf("Not logged") != -1) 
+                    userIsNotLogged();
+
+                else 
+                    showFavouritePetrol(data);
+
+            });
+
+            $.ajax({
+                url: '/api/PetrolStations',
+                dataType: 'xml',
+                success: function (data) {
+
+                    $(data).find('ArrayOfPetrolStation PetrolStation').each(function () {
+
+                        var name = $(this).find('ImeNaBenzinska').text();
+                        var geo_length = $(this).find('Dolzhina').text();
+                        var geo_width = $(this).find('GeografskaShirochina').text();
+                        var rating = $(this).find('Ocena').text();
+                        var work_time = $(this).find('RabotnoVreme').text();
+                        var types_oils = $(this).find('TipoviGorivo').text();
+                        var id = $(this).find('PetrolStationId').text();
+                        var to_rate = "Неоценета";
+                        var loggedAtt = "";
+
+                        to_rate = rating > 0 ? rating + "" : to_rate;
+
+                        loggedAtt += isLogged == true ? whenUserIsLogged(id, isAdmin) : loggedAtt;
+
+
+                        var row = generateRow(name, work_time, geo_length, geo_width, types_oils, to_rate, loggedAtt);
+
+                        $("#table_body").append(row);
+
+                    });
+
+                    $("#petrolsTable").DataTable();
+
+                    if (isLogged && isAdmin)
+                        $("#btn-create").show();
+
+                }
+            })
+
+        })
+        
+
+        $("#petrolsTable").on('draw.dt', function () {
+            $("#petrolsTable .js-delete").click(function () {
+
+                button = $(this);
+                bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа бензинска пумпа од листата?",
+                    function (result) {
+
+                        if (result) {
+
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/api/PetrolStations?PetrolStationId=" + button.attr("delete-id"),
+                                success: function () {
+
+                                    button.parents("tr").remove();
+
+                                }
+                            })
+
+                        }
+
+                    })
+            })
+
+            $("#petrolsTable .js-details").click(function () {
+
+                prepareView(true);
+                showDetailsView($(this));
+
+                $("#title_details_edit").text(getName($(this)) + " (" + getGeoWidth($(this)) + ", " + getGeoLength($(this)) + ")");
+
+            })
+
+            $(".details-close").click(function () {
+
+                returnToListOfPetrols();
+
+            }) 
+
+            $("#petrolsTable .js-edit").click(function () {
+
+                emptyValidation();
+                prepareView(false);
+                
+
+                showEditView($(this));
+
+                createOrEdit = false;
+
+            })
+
+            $("#btn-create").click(function () {
+
+                emptyValidation();
+                prepareView(false);
+                createOrEdit = true;
+                prepareForCreation();
+
+            })
+
+            $("#edit-close").click(function () {
+                emptyValidation();
+
+                if (validate()) {
+
+                    var rating = checkRatingValidity();
+                   
+                    var fullName = getFullName();
+                    var types_oils = getCheckboxInfo();
+
+                    if (createOrEdit) {
+
+                        generateAjax("POST", rating, fullName, types_oils);
+
+                    } else {
+
+                        generateAjax("PUT", rating, fullName, types_oils);
+                    }
+                }
+            }) 
+
+            $("#petrolsTable .js-favourite-petrol").click(function () {
+                var id = $(this).attr('petrol-id');
+
+                bootbox.confirm("Дали сте сигурни дека сакате да ја изберете оваа бензинска како ваша омилена?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "POST",
+                                url: "/PetrolStations/AddFavouritePetrol?PetrolStationId=" + id,
+                                success: function (data) {
+
+                                    var display = $("#favourite-petrol-head").attr('display');
+                                    if (data.indexOf("Already has!") != -1) {
+                                        alert("Веќе имате изберено омилена бензинска пумпа. Доколку сакате да ја промените прво избришете ја моменталната, " +
+                                            display + ", а потоа изберете ја онаа којашто сакате пак.")
+                                    } else {
+                                        location.reload("/PetrolStations/Index");
+                                    }
+
+                                }
+                            })
+                        }
+                    })
+            }) 
+
+            $("#btn-favourite-petrol").click(function () {
+
+                var display = $(this).parents("#fav-petrol-block").find("#favourite-petrol-head").attr('display');
+
+                bootbox.confirm("Дали сте сигурни дека веќе не сакате бензинската пумпа " +
+                    display + " да ви биде омилена?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "PUT",
+                                url: "/PetrolStations/RemoveFavouritePetrol",
+                                success: function (data) {
+                                    if (data.indexOf("Ok") != -1)
+                                        location.reload("PetrolStations/Index");
+                                    else
+                                        alert("Се јави проблем при обидот на бришење! Обиди се пак");
+                                }
+                            })
+                        }
+                    })
+            })
+        })
+    </script>
 }
