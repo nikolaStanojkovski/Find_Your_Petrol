@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  find_your_petrol1:
+    image: findyourpetrol1:dev
+    container_name: Find_Your_Petrol1
+    build:
+      args:
+        source: obj/Docker/empty/
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "Find_Your_Petrol1"
+    volumes:
+      - C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1:C:\inetpub\wwwroot
+      - :C:\remote_debugger:ro
+    entrypoint: cmd /c "start /B C:\\ServiceMonitor.exe w3svc & C:\\remote_debugger\\x64\\msvsmon.exe /noauth /anyuser /silent /nostatus /noclrwarn /nosecuritywarn /nofirewallwarn /nowowwarn /timeout:2147483646"
+

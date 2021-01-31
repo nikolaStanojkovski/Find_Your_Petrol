@@ -1,0 +1,6 @@
+version: '3.4'
+
+services:
+  find_your_petrol1:
+    ports:
+      - "80"

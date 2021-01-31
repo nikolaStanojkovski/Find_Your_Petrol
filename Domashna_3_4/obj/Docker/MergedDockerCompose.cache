@@ -1,0 +1,9 @@
+services:
+  find_your_petrol1:
+    build:
+      context: C:\Users\Nick\Documents\GitHub\Find_Your_Petrol\Domashna_3_4\Find_Your_Petrol1
+      dockerfile: Dockerfile
+    image: findyourpetrol1
+    ports:
+    - target: 80
+version: '3.4'

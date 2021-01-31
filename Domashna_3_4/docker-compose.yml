@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  find_your_petrol1:
+    image: ${DOCKER_REGISTRY-}findyourpetrol1
+    build:
+      context: .\Find_Your_Petrol1
+      dockerfile: Dockerfile

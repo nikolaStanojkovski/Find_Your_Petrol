@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  find_your_petrol1:
+    container_name: Find_Your_Petrol1
+    build:
+      args:
+        source: obj/Docker/publish/
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "Find_Your_Petrol1"
+    volumes:
+      - :C:\remote_debugger:ro
+    entrypoint: cmd /c "start /B C:\\ServiceMonitor.exe w3svc & C:\\remote_debugger\\x64\\msvsmon.exe /noauth /anyuser /silent /nostatus /noclrwarn /nosecuritywarn /nofirewallwarn /nowowwarn /timeout:2147483646"
+    labels:
+      com.microsoft.visualstudio.debuggee.program: ""
+      com.microsoft.visualstudio.debuggee.workingdirectory: "C:\\app"
+      com.microsoft.visual-studio.project-name: "Find_Your_Petrol1"
