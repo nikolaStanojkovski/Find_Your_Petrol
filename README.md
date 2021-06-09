@@ -26,8 +26,8 @@ There are couple of main functionalities which the application consists off:
 - Sorting out petrols by every attribute they have once filtered
 </b>
 
-In order to make this possible we extracted the details about the petrols from OpenStreetMap as our main source of information. Mapped it and filtered it all into a PostgreSQL database in order to have a reliable data for processing.
-The filtering was done through Bash '.sh' scripts which was using python interpreter. And finally all functionalities and front-end design of the user interface was done in Visual Studio with the help of ASP.NET.
+In order to make this possible we extracted the details about the petrols from <b>OpenStreetMap</b> as our main source of information. Mapped it and filtered it all into a <b>PostgreSQL</b> database in order to have a reliable data for processing.
+The filtering was done through <b>Bash '.sh'</b> scripts which was using python interpreter. And finally all functionalities and front-end design of the user interface was done in Visual Studio with the help of <b>ASP.NET</b> and <b>Server Side Razor</b>.
 
 Our group consists of 3 members:
 
@@ -70,7 +70,7 @@ We would be grateful if you let us know that our time was spent on a good cause.
 •	Сортирање на бензински пумпи според секој атрибут којшто тие го поседуваат <br>
 </b>
 <br> <br>
-За да ја направиме оваа идеја реалност ги користевме деталите достапни за бензинските пумпи од вебсајтот "OpenStreetMap" како главен извор на информации (иницијално во .xml формат). Ги исфилтриравме истите во "PostreSQL" база на податоци за да имаме константни и безбедни податоци за процесирање, користејќи "bash" скрипти и "python" интерпретер. Потоа, во "Visual Studio", преку технологијата "ASP.NET" се погриживме за секоја функционалност во однос на корисничкиот интерфејс и фронт-енд дизајнот.
+За да ја направиме оваа идеја реалност ги користевме деталите достапни за бензинските пумпи од вебсајтот <b>"OpenStreetMap"</b> како главен извор на информации (иницијално во .xml формат). Ги исфилтриравме истите во <b>"PostreSQL"</b> база на податоци за да имаме константни и безбедни податоци за процесирање, користејќи <b>"bash"</b> скрипти и <b>"python"</b> интерпретер. Потоа, во <b>"Visual Studio"</b>, преку технологијата <b>"ASP.NET"</b> и <b>"Server Side Razor"</b> се погриживме за секоја функционалност во однос на корисничкиот интерфејс и фронт-енд дизајнот.
 Нашата група се состои од 3 члена: <br>
 <i>
 
