@@ -9,7 +9,7 @@
 -----------------------------------------------------------------------------------
 # <b>Find your petrol</b>
 -----------------------------------------------------------------------------------
-We live in a very hectic world where you need a lot traveling to get any job done. That means, we all need vehicles, and, all of them need to be powered by some kind of oil. The petrols are the only places which give us that necessary supply and help us create that flow we need in order to live a normal life. That being said we think that most citizens don't have enough information about the petrols like their location, types of oils they have, working hours and, general more general information about them (information about the employees, owners - general stuff etc...) even through they have to use them very often.
+We live in a very hectic world where you need a lot traveling to get any job done. That means, we all need vehicles, and, all of them need to be powered by some kind of oil. The petrols are the only places which give us that necessary supply and help us create that flow we need in order to live a normal life. That being said we think that most citizens don't have enough information about the petrols like their location, types of oils they have, working hours and, general information about them (information about the employees, owners - general stuff etc...) even through they have to use them very often.
 
 This is the reason we chose this topic as our main project. We hope to help everyone who needs more information about petrols in his surrounding environment, and even more important, everyone that needs information about petrols in the area that he will travelling to, so a lot less time is spent on researching for that matter.
 
